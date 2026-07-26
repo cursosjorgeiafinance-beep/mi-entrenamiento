@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d1b2a" />
+    <meta name="description" content="Diario de entrenamiento privado y sin conexión." />
+    <link rel="icon" href="icon-192.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Mi entrenamiento</title>
+  </head>
+  <body>
+    <header class="topbar"><div><p class="eyebrow">DIARIO PERSONAL</p><h1>Mi entrenamiento</h1></div><button id="installBtn" class="ghost" hidden>Instalar</button></header>
+    <main>
+      <section id="homeView" class="view active">
+        <article class="hero"><p>Hoy</p><h2 id="todayLabel"></h2><span>Registra sin conexión. Tus datos se quedan en este dispositivo.</span></article>
+        <div class="actions"><button id="startBtn" class="primary">Empezar entrenamiento</button><button data-view="routinesView" class="secondary">Mis rutinas</button></div>
+        <section class="card"><div class="section-title"><h2>Últimas sesiones</h2><button data-view="historyView" class="text">Ver historial</button></div><div id="recentSessions" class="empty">Aún no hay sesiones. Empieza con una rutina.</div></section>
+      </section>
+
+      <section id="routinesView" class="view"><div class="section-title"><div><p class="eyebrow">PLANIFICACIÓN</p><h2>Rutinas</h2></div><button id="newRoutineBtn" class="primary small">+ Nueva</button></div><div id="routineList" class="stack"></div></section>
+
+      <section id="workoutView" class="view"><div class="section-title"><div><p class="eyebrow" id="workoutDate"></p><h2 id="workoutTitle">Entrenamiento</h2></div><span id="timerDisplay" class="timer">00:00</span></div><div id="exerciseList" class="stack"></div><button id="addExerciseDuringWorkout" class="secondary full">+ Añadir ejercicio</button><section class="card"><h2>Cómo te has encontrado</h2><div class="grid"><label class="wide">Lugar<input id="trainingPlace" list="trainingPlaces" placeholder="Ej. gimnasio, parque o casa" /><datalist id="trainingPlaces"><option value="Gimnasio"></option><option value="Parque"></option><option value="Casa"></option></datalist></label><label>Energía <select id="energy"><option value="">—</option><option>Baja</option><option selected>Normal</option><option>Alta</option></select></label><label>Sueño (horas)<input id="sleep" type="number" min="0" max="24" step="0.5" placeholder="Ej. 7,5" /></label><label class="wide">Percepción general (1–10)<input id="overallRpe" type="range" min="1" max="10" value="7" /><output id="overallRpeValue">7</output></label><label class="wide">Molestias / problemas<textarea id="issues" rows="3" placeholder="Zona, intensidad (0–10) y cuándo apareció"></textarea></label><label class="wide">Comentario<textarea id="comments" rows="3" placeholder="Ej. Dormí poco; buena energía al empezar."></textarea></label></div></section><button id="finishBtn" class="primary full">Finalizar y guardar sesión</button><button id="discardWorkoutBtn" class="text full">Descartar sesión en curso</button></section>
+
+      <section id="historyView" class="view"><div class="section-title"><div><p class="eyebrow">REGISTRO LOCAL</p><h2>Historial</h2></div><button id="exportAllBtn" class="secondary small">Exportar</button></div><div id="historyList" class="stack"></div><section class="card"><h2>Copia de seguridad</h2><p>Guarda el historial de vez en cuando, sobre todo antes de cambiar de móvil.</p><div class="actions"><button id="backupBtn" class="secondary">Descargar JSON</button><label class="file-btn">Importar copia<input id="importInput" type="file" accept="application/json,.json" hidden /></label></div><button id="csvBtn" class="text">Exportar historial a CSV</button></section></section>
+    </main>
+    <nav><button data-view="homeView" class="nav active">Inicio</button><button data-view="routinesView" class="nav">Rutinas</button><button data-view="historyView" class="nav">Historial</button></nav>
+
+    <dialog id="routineDialog"><form id="routineForm"><div class="section-title"><h2 id="routineDialogTitle">Nueva rutina</h2><button type="button" data-close-dialog="routineDialog" class="icon" aria-label="Cerrar">×</button></div><input id="routineId" type="hidden" /><label>Nombre de la rutina<input id="routineName" required placeholder="Ej. Cuerpo completo A" /></label><label>Descripción opcional<input id="routineDescription" placeholder="Ej. Lunes y jueves" /></label><div class="section-title"><h3>Ejercicios</h3><button type="button" id="addRoutineExercise" class="secondary small">+ Añadir</button></div><div id="routineExercises" class="stack"></div><div class="dialog-actions"><button type="button" data-close-dialog="routineDialog" class="secondary">Cancelar</button><button id="saveRoutineBtn" type="submit" class="primary">Guardar rutina</button></div></form></dialog>
+    <dialog id="exerciseDialog"><form id="exerciseForm"><div class="section-title"><h2>Añadir ejercicio</h2><button type="button" data-close-dialog="exerciseDialog" class="icon" aria-label="Cerrar">×</button></div><label>Nombre<input id="quickExerciseName" required placeholder="Ej. Remo con mancuerna" /></label><label>Series previstas<input id="quickExerciseSets" type="number" min="1" value="3" /></label><label>Repeticiones objetivo<input id="quickExerciseReps" placeholder="Ej. 8–12" /></label><div class="dialog-actions"><button type="button" data-close-dialog="exerciseDialog" class="secondary">Cancelar</button><button type="submit" class="primary">Añadir</button></div></form></dialog>
+    <dialog id="sessionDialog"><div id="sessionDetail"></div><div class="dialog-actions"><button id="downloadSessionBtn" class="primary">Descargar Markdown</button><button id="closeSessionBtn" class="secondary">Cerrar</button></div></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
