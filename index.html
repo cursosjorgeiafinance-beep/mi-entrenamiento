@@ -16,6 +16,13 @@
       <section id="homeView" class="view active">
         <article class="hero"><p>Hoy</p><h2 id="todayLabel"></h2><span>Registra sin conexión. Tus datos se quedan en este dispositivo.</span></article>
         <div class="actions"><button id="startBtn" class="primary">Empezar entrenamiento</button><button data-view="routinesView" class="secondary">Mis rutinas</button></div>
+        <button id="refreshPrescriptionBtn" class="text full planning-refresh">Actualizar próxima sesión</button>
+        <section id="nextSessionCard" class="card prescription-card" hidden>
+          <p class="eyebrow">PRÓXIMA SESIÓN APROBADA</p>
+          <h2 id="nextSessionName"></h2>
+          <p id="nextSessionSummary"></p>
+          <button id="startPrescriptionBtn" class="primary full">Empezar con la propuesta</button>
+        </section>
         <section class="card"><div class="section-title"><h2>Últimas sesiones</h2><button data-view="historyView" class="text">Ver historial</button></div><div id="recentSessions" class="empty">Aún no hay sesiones. Empieza con una rutina.</div></section>
       </section>
 

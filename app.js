@@ -1,5 +1,7 @@
 const KEY="mi-entrenamiento-v1";
 const DRAFT_KEY="mi-entrenamiento-sesion-en-curso-v1";
+const PRESCRIPTION_KEY="mi-entrenamiento-proxima-sesion-v1";
+const PRESCRIPTION_URL="./proxima-sesion.json";
 const EXPORT_SCHEMA_VERSION=1;
 const DEFAULT_ROUTINES=[
   {id:"full-body-a",name:"Full body A",description:"Básicos controlados · RPE 7 · 2–3 repeticiones en reserva",exercises:[
@@ -73,6 +75,7 @@ function loadData(){
   try{
     const stored=JSON.parse(localStorage.getItem(KEY)||"null");
     if(stored&&Array.isArray(stored.routines)&&Array.isArray(stored.sessions)){
+      if(!Array.isArray(stored.consumedPrescriptionIds))stored.consumedPrescriptionIds=[];
       const existingIds=new Set(stored.routines.map(routine=>routine.id));
       DEFAULT_ROUTINES.forEach(routine=>{
         if(!existingIds.has(routine.id))stored.routines.push(structuredClone(routine));
@@ -80,12 +83,65 @@ function loadData(){
       return stored;
     }
   }catch{}
-  return {routines:structuredClone(DEFAULT_ROUTINES),sessions:[]};
+  return {routines:structuredClone(DEFAULT_ROUTINES),sessions:[],consumedPrescriptionIds:[]};
+}
+function validPrescription(value){
+  return Boolean(
+    value&&
+    value.schemaVersion===1&&
+    value.kind==="training-next-session"&&
+    value.status==="approved"&&
+    typeof value.prescriptionId==="string"&&
+    value.prescriptionId.trim()&&
+    typeof value.routineId==="string"&&
+    typeof value.routineName==="string"&&
+    Array.isArray(value.exercises)&&
+    value.exercises.length&&
+    value.exercises.every(exercise=>
+      exercise&&
+      typeof exercise.name==="string"&&
+      typeof exercise.target==="string"&&
+      Number.isInteger(exercise.restSeconds)&&
+      exercise.restSeconds>=15&&
+      exercise.restSeconds<=600&&
+      Array.isArray(exercise.sets)&&
+      exercise.sets.length&&
+      exercise.sets.every(set=>set&&["reps","weight","effort"].every(field=>typeof set[field]==="string"))
+    )
+  );
+}
+function loadCachedPrescription(){
+  try{
+    const cached=JSON.parse(localStorage.getItem(PRESCRIPTION_KEY)||"null");
+    return validPrescription(cached)?cached:null;
+  }catch{
+    return null;
+  }
 }
 let data=loadData(), workout=null, interval=null, elapsed=0, pendingInstall=null, lastFinished=null;
+let nextPrescription=loadCachedPrescription();
 let restTimer=null, restInterval=null, restDoneTimeout=null, audioContext=null;
 const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const sameName=(left,right)=>String(left||"").trim().toLocaleLowerCase("es")===String(right||"").trim().toLocaleLowerCase("es");
+function prescriptionConsumed(prescription){return data.consumedPrescriptionIds.includes(prescription?.prescriptionId)}
+function availablePrescription(){return validPrescription(nextPrescription)&&!prescriptionConsumed(nextPrescription)?nextPrescription:null}
+function prescriptionMatchesRoutine(prescription,routine){
+  if(!prescription||!routine)return false;
+  if(prescription.routineId!==routine.id&&!sameName(prescription.routineName,routine.name))return false;
+  if(prescription.exercises.length!==routine.exercises.length)return false;
+  return routine.exercises.every(exercise=>
+    prescription.exercises.some(item=>sameName(item.plannedName||item.name,exercise.name))
+  );
+}
+function prescriptionForRoutine(routine){
+  const prescription=availablePrescription();
+  return prescriptionMatchesRoutine(prescription,routine)?prescription:null;
+}
+function consumePrescription(id){
+  if(!id||data.consumedPrescriptionIds.includes(id))return;
+  data.consumedPrescriptionIds=[...data.consumedPrescriptionIds,id].slice(-30);
+}
 function exerciseCatalog(){
   const catalog=new Map();
   [...data.routines.flatMap(r=>r.exercises),...EXTRA_EXERCISES].forEach(ex=>{
@@ -113,11 +169,51 @@ function alternativeOptions(exercise){
 }
 function save(){localStorage.setItem(KEY,JSON.stringify(data));} function uid(){return crypto.randomUUID?crypto.randomUUID():Date.now()+Math.random();}
 function dateText(d=new Date()){return new Intl.DateTimeFormat('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(d)}
-function dateInput(){return new Date().toISOString().slice(0,10)} function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);}
+function dateInput(){const now=new Date(),pad=value=>String(value).padStart(2,'0');return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`} function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);}
 function monthFromDate(value){return String(value||'').slice(0,7)}
 function defaultExportMonth(){return monthFromDate(data.sessions[0]?.date)||monthFromDate(dateInput())}
 function view(id){$$('.view').forEach(v=>v.classList.toggle('active',v.id===id));$$('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(id==='routinesView')renderRoutines();if(id==='historyView')renderHistory();window.scrollTo(0,0)}
-function renderHome(){ $('#todayLabel').textContent=dateText(); const root=$('#recentSessions'); const recent=data.sessions.slice(0,3);root.innerHTML=recent.length?recent.map(s=>`<button class="history-item" data-session="${s.id}"><span><strong>${esc(s.routineName)}</strong><p>${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}${s.place?' · '+esc(s.place):''} · ${s.exercises.length} ejercicios</p></span><span>›</span></button>`).join(''):'Aún no hay sesiones. Empieza con una rutina.';}
+function renderNextPrescription(){
+  const card=$('#nextSessionCard'), prescription=availablePrescription();
+  if(!card)return;
+  card.hidden=!prescription;
+  if(!prescription)return;
+  $('#nextSessionName').textContent=prescription.routineName;
+  $('#nextSessionSummary').textContent=`${prescription.exercises.length} ejercicios · propuesta ${prescription.prescriptionId}`;
+}
+async function refreshNextPrescription({notify=false}={}){
+  try{
+    const response=await fetch(`${PRESCRIPTION_URL}?v=${Date.now()}`,{cache:'no-store'});
+    if(!response.ok)throw Error(`HTTP ${response.status}`);
+    const candidate=await response.json();
+    if(candidate?.kind==="training-next-session"&&candidate?.status==="empty"){
+      nextPrescription=null;
+      localStorage.removeItem(PRESCRIPTION_KEY);
+      renderNextPrescription();
+      if(notify)alert('Todavía no hay una próxima sesión aprobada.');
+      return;
+    }
+    if(!validPrescription(candidate))throw Error('Formato de prescripción no válido');
+    nextPrescription=candidate;
+    localStorage.setItem(PRESCRIPTION_KEY,JSON.stringify(candidate));
+    renderNextPrescription();
+    if(notify){
+      alert(prescriptionConsumed(candidate)
+        ?'Esta propuesta ya se utilizó en este dispositivo.'
+        :`Próxima sesión actualizada: ${candidate.routineName}.`);
+    }
+  }catch{
+    nextPrescription=loadCachedPrescription();
+    renderNextPrescription();
+    if(notify)alert(nextPrescription?'Sin conexión. Se conserva la última propuesta descargada.':'No se pudo buscar una propuesta nueva.');
+  }
+}
+function renderHome(){
+  $('#todayLabel').textContent=dateText();
+  renderNextPrescription();
+  const root=$('#recentSessions'), recent=data.sessions.slice(0,3);
+  root.innerHTML=recent.length?recent.map(s=>`<button class="history-item" data-session="${s.id}"><span><strong>${esc(s.routineName)}</strong><p>${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}${s.place?' · '+esc(s.place):''} · ${s.exercises.length} ejercicios</p></span><span>›</span></button>`).join(''):'Aún no hay sesiones. Empieza con una rutina.';
+}
 function renderRoutines(){const r=$('#routineList');r.innerHTML=data.routines.length?data.routines.map(x=>`<article class="routine-item"><div><strong>${esc(x.name)}</strong><p>${esc(x.description||'Sin descripción')} · ${x.exercises.length} ejercicios</p></div><div><button class="primary small" data-start="${x.id}">Empezar</button><button class="text" data-edit="${x.id}">Editar</button></div></article>`).join(''):'<div class="empty">Crea tu primera rutina. Puedes cambiarla cuando quieras.</div>'}
 function renderHistory(){
   const r=$('#historyList');
@@ -127,19 +223,39 @@ function renderHistory(){
 function openRoutine(routine){$('#routineDialogTitle').textContent=routine?'Editar rutina':'Nueva rutina';$('#routineId').value=routine?.id||'';$('#routineName').value=routine?.name||'';$('#routineDescription').value=routine?.description||'';$('#routineExercises').innerHTML='';(routine?.exercises||[{name:'',sets:3,reps:''}]).forEach(addRoutineEditor);$('#routineDialog').showModal()}
 function addRoutineEditor(ex={name:'',sets:3,reps:''}){const row=document.createElement('div');row.className='editor-row';row.innerHTML=`<label>Ejercicio<input class="e-name" required value="${esc(ex.name)}" placeholder="Ej. Dominadas" /></label><label>Series<input class="e-sets" type="number" min="1" value="${ex.sets||3}" /></label><label>Objetivo<input class="e-reps" value="${esc(ex.reps||'')}" placeholder="Ej. 5–8" /></label><button type="button" class="remove-editor">×</button>`;$('#routineExercises').append(row)}
 function previousExercise(name){for(const s of data.sessions){const found=s.exercises.find(x=>x.name.toLowerCase()===name.toLowerCase());if(found)return found;}return null}
-function startWorkout(routine){
+function prescribedValue(set,field,fallback){
+  return set&&Object.prototype.hasOwnProperty.call(set,field)?set[field]:fallback;
+}
+function startWorkout(routine,prescription=prescriptionForRoutine(routine)){
+  if(workout){
+    alert('Ya hay una sesión en curso. Finalízala o descártala antes de comenzar otra.');
+    view('workoutView');
+    return;
+  }
   cancelRest(false);
-  workout={id:uid(),routineName:routine.name,date:dateInput(),startedAt:new Date().toISOString(),exercises:routine.exercises.map(e=>{
-    const prev=previousExercise(e.name);
+  workout={
+    id:uid(),
+    routineName:routine.name,
+    date:dateInput(),
+    startedAt:new Date().toISOString(),
+    ...(prescription?{prescriptionId:prescription.prescriptionId,prescriptionApprovedAt:prescription.approvedAt}:{}),
+    exercises:routine.exercises.map(e=>{
+    const prescribed=prescription?.exercises.find(item=>sameName(item.plannedName||item.name,e.name));
+    const effectiveName=prescribed?.name||e.name;
+    const prev=previousExercise(effectiveName);
+    const prescribedSets=prescribed?.sets;
+    const setCount=prescribedSets?.length||+e.sets||3;
     return {
       id:uid(),
-      name:e.name,
-      target:e.reps,
-      restSeconds:120,
-      sets:Array.from({length:+e.sets||3},(_,i)=>({
-        reps:prev?.sets[i]?.reps||'',
-        weight:prev?.sets[i]?.weight||'',
-        effort:prev?.sets[i]?.effort||'',
+      name:effectiveName,
+      ...(prescribed?.plannedName&&prescribed.plannedName!==effectiveName?{plannedName:prescribed.plannedName}:{}),
+      target:prescribed?.target||e.reps,
+      restSeconds:prescribed?.restSeconds||120,
+      prescribed:Boolean(prescribed),
+      sets:Array.from({length:setCount},(_,i)=>({
+        reps:prescribedValue(prescribedSets?.[i],'reps',prev?.sets[i]?.reps||''),
+        weight:prescribedValue(prescribedSets?.[i],'weight',prev?.sets[i]?.weight||''),
+        effort:prescribedValue(prescribedSets?.[i],'effort',prev?.sets[i]?.effort||''),
         _touched:false
       }))
     };
@@ -315,7 +431,7 @@ function renderWorkout(){
       <label>Cambiar ejercicio<select data-alternative="${e.id}" aria-label="Cambiar ${esc(e.name)}">${alternativeOptions(e)}</select></label>
       <label>Descanso<select data-rest-duration="${e.id}" aria-label="Duración del descanso">${[60,90,120,180].map(seconds=>`<option value="${seconds}" ${restSecondsFor(e)===seconds?'selected':''}>${seconds<120?seconds+' s':seconds/60+' min'}</option>`).join('')}</select></label>
     </div>
-    <p class="exercise-meta">Objetivo: ${esc(e.target||'—')} · se han cargado los últimos valores si existen.</p>
+    <p class="exercise-meta">Objetivo: ${esc(e.target||'—')} · ${e.prescribed?'carga de la propuesta aprobada':'se han cargado los últimos valores si existen'}.</p>
     ${e.sets.map((s,j)=>`<div class="set-row">
       <span class="set-number">${j+1}</span>
       <label>Reps<input data-field="reps" data-set="${j}" inputmode="decimal" value="${esc(s.reps)}" /></label>
@@ -392,8 +508,10 @@ function finish(){
   workout.comments=$('#comments').value.trim();
   workout.exercises.forEach(exercise=>{
     delete exercise.plannedTarget;
+    delete exercise.prescribed;
     exercise.sets.forEach(set=>delete set._touched);
   });
+  consumePrescription(workout.prescriptionId);
   data.sessions.unshift(workout);
   save();
   localStorage.removeItem(DRAFT_KEY);
@@ -430,6 +548,7 @@ function sessionMetrics(s){
     date:s.date,
     startedAt:s.startedAt,
     routineName:s.routineName,
+    ...(s.prescriptionId?{prescriptionId:s.prescriptionId}:{}),
     duration:s.duration,
     place:s.place||'',
     energy:s.energy||'',
@@ -487,6 +606,15 @@ document.addEventListener('click',e=>{
   if(b.id==='startBtn'){
     if(data.routines.length===1)startWorkout(data.routines[0]);
     else view('routinesView');
+  }
+  if(b.id==='refreshPrescriptionBtn')refreshNextPrescription({notify:true});
+  if(b.id==='startPrescriptionBtn'){
+    const prescription=availablePrescription();
+    const routine=data.routines.find(item=>item.id===prescription?.routineId||sameName(item.name,prescription?.routineName));
+    if(!prescription)return alert('Esta propuesta ya no está disponible.');
+    if(!routine)return alert('La rutina de la propuesta no existe en este dispositivo.');
+    if(!prescriptionMatchesRoutine(prescription,routine))return alert('La rutina guardada en este dispositivo no coincide con la propuesta aprobada.');
+    startWorkout(routine,prescription);
   }
   if(b.id==='newRoutineBtn')openRoutine();
   if(b.dataset.start)startWorkout(data.routines.find(r=>r.id===b.dataset.start));
@@ -555,5 +683,5 @@ $('#exerciseList').addEventListener('change',e=>{
 $('#workoutView').addEventListener('input',saveDraft);
 $('#workoutView').addEventListener('change',saveDraft);
 $('#overallRpe').addEventListener('input',e=>$('#overallRpeValue').textContent=e.target.value);
-$('#importInput').addEventListener('change',async e=>{try{const imported=JSON.parse(await e.target.files[0].text());if(!Array.isArray(imported.routines)||!Array.isArray(imported.sessions))throw Error();if(!confirm('Esto sustituirá los datos actuales de este dispositivo. ¿Continuar?'))return;data=imported;save();renderHome();renderRoutines();renderHistory();alert('Copia importada correctamente.')}catch{alert('No parece una copia válida de Mi entrenamiento.')}});
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pendingInstall=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{pendingInstall.prompt();await pendingInstall.userChoice;pendingInstall=null;$('#installBtn').hidden=true};save();if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js');renderHome();restoreDraft();
+$('#importInput').addEventListener('change',async e=>{try{const imported=JSON.parse(await e.target.files[0].text());if(!Array.isArray(imported.routines)||!Array.isArray(imported.sessions))throw Error();if(!confirm('Esto sustituirá los datos actuales de este dispositivo. ¿Continuar?'))return;if(!Array.isArray(imported.consumedPrescriptionIds))imported.consumedPrescriptionIds=[];data=imported;save();renderHome();renderRoutines();renderHistory();alert('Copia importada correctamente.')}catch{alert('No parece una copia válida de Mi entrenamiento.')}});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pendingInstall=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{pendingInstall.prompt();await pendingInstall.userChoice;pendingInstall=null;$('#installBtn').hidden=true};save();if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js');renderHome();restoreDraft();refreshNextPrescription();
