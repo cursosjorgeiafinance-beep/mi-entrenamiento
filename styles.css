@@ -78,6 +78,8 @@ input, select, textarea { width: 100%; background: #0b1824; border: 1px solid va
 textarea { resize: vertical; }
 output { display: inline-block; margin-top: 5px; color: var(--accent); font-weight: 800; }
 .file-btn { display: inline-flex; align-items: center; padding: 12px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+.export-card { margin-top: 18px; }
+.export-card > label { max-width: 230px; }
 nav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; background: #0d1b2a; border-top: 1px solid var(--line); padding: 9px max(12px, env(safe-area-inset-left)) calc(9px + env(safe-area-inset-bottom)); }
 nav button { color: var(--muted); background: none; padding: 8px; }
 .nav.active { color: var(--accent); }
