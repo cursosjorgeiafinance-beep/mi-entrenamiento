@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "kind": "training-next-session",
+  "status": "approved",
+  "prescriptionId": "full-body-b-2026-07-28-v2",
+  "approvedAt": "2026-07-27T21:58:52.575951Z",
+  "routineId": "full-body-b",
+  "routineName": "Full body B",
+  "sourceProposal": {
+    "proposalId": "full-body-b-2026-07-28-v2",
+    "createdAt": "2026-07-27T21:57:34.331Z"
+  },
+  "exercises": [
+    {
+      "name": "Sentadilla búlgara",
+      "target": "8–10 por pierna · RPE 7",
+      "restSeconds": 180,
+      "sets": [
+        {
+          "reps": "8–10 por pierna",
+          "weight": "",
+          "effort": "RPE 7"
+        },
+        {
+          "reps": "8–10 por pierna",
+          "weight": "",
+          "effort": "RPE 7"
+        }
+      ]
+    },
+    {
+      "name": "Press inclinado con mancuernas",
+      "target": "8–12 · RPE 7–8",
+      "restSeconds": 180,
+      "sets": [
+        {
+          "reps": "8–12",
+          "weight": "",
+          "effort": "RPE 7–8"
+        },
+        {
+          "reps": "8–12",
+          "weight": "",
+          "effort": "RPE 7–8"
+        }
+      ]
+    },
+    {
+      "name": "Remo con pecho apoyado",
+      "target": "8–12 · RPE 7",
+      "restSeconds": 180,
+      "sets": [
+        {
+          "reps": "8–12",
+          "weight": "",
+          "effort": "RPE 7"
+        },
+        {
+          "reps": "8–12",
+          "weight": "",
+          "effort": "RPE 7"
+        }
+      ]
+    },
+    {
+      "name": "Curl femoral sentado",
+      "target": "10–15 · RPE 8",
+      "restSeconds": 120,
+      "sets": [
+        {
+          "reps": "10–15",
+          "weight": "",
+          "effort": "RPE 8"
+        },
+        {
+          "reps": "10–15",
+          "weight": "",
+          "effort": "RPE 8"
+        }
+      ]
+    },
+    {
+      "name": "Gemelo en prensa o máquina",
+      "target": "10–15 · RPE 8",
+      "restSeconds": 120,
+      "sets": [
+        {
+          "reps": "10–15",
+          "weight": "",
+          "effort": "RPE 8"
+        },
+        {
+          "reps": "10–15",
+          "weight": "",
+          "effort": "RPE 8"
+        }
+      ]
+    },
+    {
+      "name": "Dead bug controlado",
+      "target": "6–10 por lado",
+      "restSeconds": 60,
+      "sets": [
+        {
+          "reps": "6–10 por lado",
+          "weight": "",
+          "effort": ""
+        },
+        {
+          "reps": "6–10 por lado",
+          "weight": "",
+          "effort": ""
+        }
+      ]
+    }
+  ]
+}
