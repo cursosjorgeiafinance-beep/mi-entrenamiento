@@ -35,6 +35,10 @@ h3 { margin: 0; }
 .hero { background: linear-gradient(135deg, #173d4d, #14283a); }
 .hero h2 { font-size: 1.6rem; margin-bottom: 6px; }
 .hero span, .card p, .muted { color: var(--muted); }
+.planning-refresh { margin-top: -4px; }
+.prescription-card { border-color: #3a8d72; background: linear-gradient(135deg, #12382f, var(--panel)); }
+.prescription-card h2 { margin-bottom: 5px; }
+.prescription-card .full { margin-bottom: 0; }
 .actions, .dialog-actions { display: flex; gap: 10px; margin: 14px 0; }
 .primary { background: var(--accent); color: var(--accent-ink); }
 .secondary, .ghost, .file-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); }
