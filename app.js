@@ -2,7 +2,6 @@ const KEY="mi-entrenamiento-v1";
 const DRAFT_KEY="mi-entrenamiento-sesion-en-curso-v1";
 const PRESCRIPTION_KEY="mi-entrenamiento-proxima-sesion-v1";
 const PRESCRIPTION_URL="./proxima-sesion.json";
-const EXPORT_SCHEMA_VERSION=1;
 const DEFAULT_ROUTINES=[
   {id:"full-body-a",name:"Full body A",description:"Básicos controlados · RPE 7 · 2–3 repeticiones en reserva",exercises:[
     {name:"Sentadilla trasera barra alta",sets:2,reps:"6–8 · RPE 7"},
@@ -170,8 +169,6 @@ function alternativeOptions(exercise){
 function save(){localStorage.setItem(KEY,JSON.stringify(data));} function uid(){return crypto.randomUUID?crypto.randomUUID():Date.now()+Math.random();}
 function dateText(d=new Date()){return new Intl.DateTimeFormat('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(d)}
 function dateInput(){const now=new Date(),pad=value=>String(value).padStart(2,'0');return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`} function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);}
-function monthFromDate(value){return String(value||'').slice(0,7)}
-function defaultExportMonth(){return monthFromDate(data.sessions[0]?.date)||monthFromDate(dateInput())}
 function view(id){$$('.view').forEach(v=>v.classList.toggle('active',v.id===id));$$('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(id==='routinesView')renderRoutines();if(id==='historyView')renderHistory();window.scrollTo(0,0)}
 function renderNextPrescription(){
   const card=$('#nextSessionCard'), prescription=availablePrescription();
@@ -215,11 +212,7 @@ function renderHome(){
   root.innerHTML=recent.length?recent.map(s=>`<button class="history-item" data-session="${s.id}"><span><strong>${esc(s.routineName)}</strong><p>${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}${s.place?' · '+esc(s.place):''} · ${s.exercises.length} ejercicios</p></span><span>›</span></button>`).join(''):'Aún no hay sesiones. Empieza con una rutina.';
 }
 function renderRoutines(){const r=$('#routineList');r.innerHTML=data.routines.length?data.routines.map(x=>`<article class="routine-item"><div><strong>${esc(x.name)}</strong><p>${esc(x.description||'Sin descripción')} · ${x.exercises.length} ejercicios</p></div><div><button class="primary small" data-start="${x.id}">Empezar</button><button class="text" data-edit="${x.id}">Editar</button></div></article>`).join(''):'<div class="empty">Crea tu primera rutina. Puedes cambiarla cuando quieras.</div>'}
-function renderHistory(){
-  const r=$('#historyList');
-  r.innerHTML=data.sessions.length?data.sessions.map(s=>`<button class="history-item" data-session="${s.id}"><span><strong>${esc(s.routineName)}</strong><p>${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}${s.place?' · '+esc(s.place):''} · Energía: ${esc(s.energy||'—')} · RPE ${s.overallRpe}</p></span><span>›</span></button>`).join(''):'<div class="empty">Todavía no hay sesiones guardadas.</div>';
-  if(!$('#exportMonth').value)$('#exportMonth').value=defaultExportMonth();
-}
+function renderHistory(){const r=$('#historyList');r.innerHTML=data.sessions.length?data.sessions.map(s=>`<button class="history-item" data-session="${s.id}"><span><strong>${esc(s.routineName)}</strong><p>${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}${s.place?' · '+esc(s.place):''} · Energía: ${esc(s.energy||'—')} · RPE ${s.overallRpe}</p></span><span>›</span></button>`).join(''):'<div class="empty">Todavía no hay sesiones guardadas.</div>'}
 function openRoutine(routine){$('#routineDialogTitle').textContent=routine?'Editar rutina':'Nueva rutina';$('#routineId').value=routine?.id||'';$('#routineName').value=routine?.name||'';$('#routineDescription').value=routine?.description||'';$('#routineExercises').innerHTML='';(routine?.exercises||[{name:'',sets:3,reps:''}]).forEach(addRoutineEditor);$('#routineDialog').showModal()}
 function addRoutineEditor(ex={name:'',sets:3,reps:''}){const row=document.createElement('div');row.className='editor-row';row.innerHTML=`<label>Ejercicio<input class="e-name" required value="${esc(ex.name)}" placeholder="Ej. Dominadas" /></label><label>Series<input class="e-sets" type="number" min="1" value="${ex.sets||3}" /></label><label>Objetivo<input class="e-reps" value="${esc(ex.reps||'')}" placeholder="Ej. 5–8" /></label><button type="button" class="remove-editor">×</button>`;$('#routineExercises').append(row)}
 function previousExercise(name){for(const s of data.sessions){const found=s.exercises.find(x=>x.name.toLowerCase()===name.toLowerCase());if(found)return found;}return null}
@@ -520,83 +513,22 @@ function finish(){
   showSession(workout);
   workout=null;
 }
-function observationsMarkdown(s){
-  const substitutions=s.exercises.filter(e=>e.plannedName&&e.plannedName!==e.name);
-  const skipped=s.exercises.filter(e=>!e.sets.some(set=>set.reps||set.weight||set.effort));
-  const lines=[
-    '---',
-    `session_id: "${s.id}"`,
-    `fecha: "${s.date}"`,
-    `rutina: "${String(s.routineName||'').replaceAll('"','\\"')}"`,
-    '---',
-    '',
-    `# Observaciones — ${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}`
-  ];
-  lines.push('','## Molestias / problemas',s.issues||'- Sin molestias anotadas.');
-  lines.push('','## Comentarios',s.comments||'- Sin comentarios.');
-  if(substitutions.length||skipped.length){
-    lines.push('','## Cambios en la sesión');
-    substitutions.forEach(e=>lines.push(`- ${e.plannedName}: sustituido por ${e.name}.`));
-    skipped.forEach(e=>lines.push(`- ${e.name}: no realizado.`));
-  }
+function markdown(s){
+  const lines=[`# Entrenamiento — ${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}`,'', '## Resumen',`- Rutina: ${s.routineName}`,`- Lugar: ${s.place||'—'}`,`- Duración: ${Math.floor(s.duration/60)} min`, `- Percepción general: ${s.overallRpe}/10`,`- Energía: ${s.energy||'—'}`,`- Sueño: ${s.sleep||'—'} horas`,'','## Ejercicios'];
+  s.exercises.forEach(e=>{
+    lines.push('',`### ${e.name}`);
+    if(e.plannedName&&e.plannedName!==e.name)lines.push(`- Sustituye a: ${e.plannedName}`);
+    lines.push(`- Objetivo: ${e.target||'—'}`,...e.sets.map((x,i)=>`- Serie ${i+1}: ${x.weight?x.weight+' kg × ':''}${x.reps||'—'}${x.effort?' — RPE/RIR '+x.effort:''}`));
+  });
+  if(s.issues)lines.push('','## Molestias / problemas',s.issues);
+  if(s.comments)lines.push('','## Comentario',s.comments);
   return lines.join('\n');
 }
 function showSession(s){$('#sessionDetail').innerHTML=`<p class="eyebrow">SESIÓN GUARDADA</p><h2>${esc(s.routineName)}</h2><p class="muted">${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}${s.place?' · '+esc(s.place):''} · ${Math.floor(s.duration/60)} min</p><div class="card"><strong>${s.exercises.length} ejercicios registrados</strong><p>${s.issues?`Molestias: ${esc(s.issues)}`:'Sin molestias anotadas.'}</p></div>`;lastFinished=s;$('#sessionDialog').showModal()}
-function sessionMetrics(s){
-  return {
-    id:s.id,
-    date:s.date,
-    startedAt:s.startedAt,
-    routineName:s.routineName,
-    ...(s.prescriptionId?{prescriptionId:s.prescriptionId}:{}),
-    duration:s.duration,
-    place:s.place||'',
-    energy:s.energy||'',
-    sleep:s.sleep||'',
-    overallRpe:s.overallRpe||'',
-    exercises:s.exercises.map(e=>({
-      id:e.id,
-      name:e.name,
-      ...(e.plannedName&&e.plannedName!==e.name?{plannedName:e.plannedName}:{}),
-      target:e.target||'',
-      sets:e.sets.map(set=>({reps:set.reps||'',weight:set.weight||'',effort:set.effort||''}))
-    }))
-  };
-}
-function sessionsForMonth(month){
-  return data.sessions
-    .filter(s=>monthFromDate(s.date)===month)
-    .slice()
-    .sort((a,b)=>String(a.date).localeCompare(String(b.date))||String(a.startedAt).localeCompare(String(b.startedAt)));
-}
-function selectedExportMonth(){return $('#exportMonth').value||defaultExportMonth()}
-function exportMonthlyMetrics(){
-  const month=selectedExportMonth(), sessions=sessionsForMonth(month);
-  if(!sessions.length)return alert(`No hay sesiones guardadas en ${month}.`);
-  const payload={
-    schemaVersion:EXPORT_SCHEMA_VERSION,
-    kind:'training-metrics',
-    period:month,
-    exportedAt:new Date().toISOString(),
-    sessions:sessions.map(sessionMetrics)
-  };
-  download(`metricas_${month}.json`,JSON.stringify(payload,null,2),'application/json');
-}
-function exportRoutines(){
-  const payload={
-    schemaVersion:EXPORT_SCHEMA_VERSION,
-    kind:'training-routines',
-    exportedAt:new Date().toISOString(),
-    routines:data.routines
-  };
-  download('rutinas.json',JSON.stringify(payload,null,2),'application/json');
-}
 function exportCsv(){
-  const month=selectedExportMonth(), sessions=sessionsForMonth(month);
-  if(!sessions.length)return alert(`No hay sesiones guardadas en ${month}.`);
-  const rows=[['fecha','sesion_id','rutina','lugar','ejercicio','ejercicio_planificado','serie','repeticiones','peso_kg','rpe_o_rir','energia','sueno_horas','rpe_general']];
-  sessions.forEach(s=>s.exercises.forEach(e=>e.sets.forEach((x,i)=>rows.push([s.date,s.id,s.routineName,s.place||'',e.name,e.plannedName||'',i+1,x.reps,x.weight,x.effort,s.energy,s.sleep,s.overallRpe]))));
-  download(`metricas_${month}.csv`,rows.map(r=>r.map(x=>'"'+String(x??'').replaceAll('"','""')+'"').join(';')).join('\n'),'text/csv;charset=utf-8');
+  const rows=[['fecha','rutina','lugar','ejercicio','ejercicio_planificado','serie','repeticiones','peso_kg','rpe_o_rir','energia','sueno_horas','rpe_general','molestias','comentarios']];
+  data.sessions.slice().reverse().forEach(s=>s.exercises.forEach(e=>e.sets.forEach((x,i)=>rows.push([s.date,s.routineName,s.place||'',e.name,e.plannedName||'',i+1,x.reps,x.weight,x.effort,s.energy,s.sleep,s.overallRpe,s.issues,s.comments]))));
+  download('historial-entrenamientos.csv',rows.map(r=>r.map(x=>'"'+String(x??'').replaceAll('"','""')+'"').join(';')).join('\n'),'text/csv;charset=utf-8');
 }
 document.addEventListener('click',e=>{
   const b=e.target.closest('button');
@@ -646,11 +578,9 @@ document.addEventListener('click',e=>{
   if(b.id==='finishBtn')finish();
   if(b.id==='discardWorkoutBtn')discardWorkout();
   if(b.dataset.session)showSession(data.sessions.find(s=>s.id===b.dataset.session));
-  if(b.id==='downloadSessionBtn')download(`observacion_${lastFinished.date}_${String(lastFinished.id).slice(0,8)}.md`,observationsMarkdown(lastFinished),'text/markdown;charset=utf-8');
+  if(b.id==='downloadSessionBtn')download(`sesion_${lastFinished.date}.md`,markdown(lastFinished),'text/markdown;charset=utf-8');
   if(b.id==='closeSessionBtn')$('#sessionDialog').close();
-  if(b.id==='exportMonthBtn')exportMonthlyMetrics();
-  if(b.id==='exportRoutinesBtn')exportRoutines();
-  if(b.id==='backupBtn')download(`copia-seguridad-entrenamiento_${dateInput()}.json`,JSON.stringify(data,null,2),'application/json');
+  if(b.id==='backupBtn'||b.id==='exportAllBtn')download('copia-seguridad-entrenamiento.json',JSON.stringify(data,null,2),'application/json');
   if(b.id==='csvBtn')exportCsv();
 });
 $('#routineForm').addEventListener('submit',e=>{e.preventDefault();const exercises=$$('.editor-row').map(x=>({name:x.querySelector('.e-name').value.trim(),sets:+x.querySelector('.e-sets').value||3,reps:x.querySelector('.e-reps').value.trim()})).filter(x=>x.name);if(!exercises.length)return alert('Añade al menos un ejercicio.');const id=$('#routineId').value||uid(), r={id,name:$('#routineName').value.trim(),description:$('#routineDescription').value.trim(),exercises};const n=data.routines.findIndex(x=>x.id===id);if(n>=0)data.routines[n]=r;else data.routines.push(r);save();$('#routineDialog').close();renderRoutines();renderHome()});
