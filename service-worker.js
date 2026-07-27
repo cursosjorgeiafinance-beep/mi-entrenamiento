@@ -1,4 +1,4 @@
-const CACHE="entreno-v7";
+const CACHE="entreno-v8";
 const FILES=["./index.html","./styles.css","./app.js","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{
