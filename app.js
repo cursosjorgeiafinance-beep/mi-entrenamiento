@@ -94,6 +94,18 @@ function validPrescription(value){
     value.prescriptionId.trim()&&
     typeof value.routineId==="string"&&
     typeof value.routineName==="string"&&
+    (value.sessionType===undefined||["template","adapted"].includes(value.sessionType))&&
+    (value.sessionType!=="adapted"||(
+      value.sourceRoutine&&
+      typeof value.sourceRoutine.routineId==="string"&&
+      typeof value.sourceRoutine.routineName==="string"
+    ))&&
+    (value.warmup===undefined||(
+      Array.isArray(value.warmup)&&
+      value.warmup.every(item=>
+        item&&typeof item.name==="string"&&typeof item.target==="string"
+      )
+    ))&&
     Array.isArray(value.exercises)&&
     value.exercises.length&&
     value.exercises.every(exercise=>
@@ -127,6 +139,7 @@ function prescriptionConsumed(prescription){return data.consumedPrescriptionIds.
 function availablePrescription(){return validPrescription(nextPrescription)&&!prescriptionConsumed(nextPrescription)?nextPrescription:null}
 function prescriptionMatchesRoutine(prescription,routine){
   if(!prescription||!routine)return false;
+  if(prescription.sessionType==="adapted")return false;
   if(prescription.routineId!==routine.id&&!sameName(prescription.routineName,routine.name))return false;
   if(prescription.exercises.length!==routine.exercises.length)return false;
   return routine.exercises.every(exercise=>
@@ -136,6 +149,20 @@ function prescriptionMatchesRoutine(prescription,routine){
 function prescriptionForRoutine(routine){
   const prescription=availablePrescription();
   return prescriptionMatchesRoutine(prescription,routine)?prescription:null;
+}
+function routineFromPrescription(prescription){
+  return {
+    id:prescription.routineId,
+    name:prescription.routineName,
+    description:prescription.sourceRoutine
+      ?`Sesión adaptada desde ${prescription.sourceRoutine.routineName}`
+      :'Sesión adaptada',
+    exercises:prescription.exercises.map(exercise=>({
+      name:exercise.plannedName||exercise.name,
+      sets:exercise.sets.length,
+      reps:exercise.target
+    }))
+  };
 }
 function consumePrescription(id){
   if(!id||data.consumedPrescriptionIds.includes(id))return;
@@ -231,7 +258,13 @@ function startWorkout(routine,prescription=prescriptionForRoutine(routine)){
     routineName:routine.name,
     date:dateInput(),
     startedAt:new Date().toISOString(),
-    ...(prescription?{prescriptionId:prescription.prescriptionId,prescriptionApprovedAt:prescription.approvedAt}:{}),
+    ...(prescription?{
+      prescriptionId:prescription.prescriptionId,
+      prescriptionApprovedAt:prescription.approvedAt,
+      sessionType:prescription.sessionType||"template",
+      ...(prescription.sourceRoutine?{sourceRoutine:structuredClone(prescription.sourceRoutine)}:{}),
+      ...(prescription.warmup?.length?{warmup:structuredClone(prescription.warmup)}:{})
+    }:{}),
     exercises:routine.exercises.map(e=>{
     const prescribed=prescription?.exercises.find(item=>sameName(item.plannedName||item.name,e.name));
     const effectiveName=prescribed?.name||e.name;
@@ -417,7 +450,12 @@ function changeExerciseAlternative(exerciseId,selectedName){
 function renderWorkout(){
   ensureRestTimerBar();
   const r=$('#exerciseList');
-  r.innerHTML=workout.exercises.map(e=>`<article class="exercise" data-exercise="${e.id}">
+  const warmup=(workout.warmup||[]).length?`<article class="exercise warmup-card">
+    <p class="eyebrow">CALENTAMIENTO</p>
+    <h2>Antes de las series efectivas</h2>
+    ${workout.warmup.map(item=>`<p><strong>${esc(item.name)}</strong> · ${esc(item.target)}</p>`).join('')}
+  </article>`:'';
+  r.innerHTML=warmup+workout.exercises.map(e=>`<article class="exercise" data-exercise="${e.id}">
     <div class="section-title"><h2>${esc(e.name)}</h2><button class="text" data-remove-exercise="${e.id}">Quitar</button></div>
     ${e.plannedName?`<p class="substitution-note">Alternativa a <strong>${esc(e.plannedName)}</strong></p>`:''}
     <div class="exercise-tools">
@@ -542,8 +580,12 @@ document.addEventListener('click',e=>{
   if(b.id==='refreshPrescriptionBtn')refreshNextPrescription({notify:true});
   if(b.id==='startPrescriptionBtn'){
     const prescription=availablePrescription();
-    const routine=data.routines.find(item=>item.id===prescription?.routineId||sameName(item.name,prescription?.routineName));
     if(!prescription)return alert('Esta propuesta ya no está disponible.');
+    if(prescription.sessionType==="adapted"){
+      startWorkout(routineFromPrescription(prescription),prescription);
+      return;
+    }
+    const routine=data.routines.find(item=>item.id===prescription.routineId||sameName(item.name,prescription.routineName));
     if(!routine)return alert('La rutina de la propuesta no existe en este dispositivo.');
     if(!prescriptionMatchesRoutine(prescription,routine))return alert('La rutina guardada en este dispositivo no coincide con la propuesta aprobada.');
     startWorkout(routine,prescription);
