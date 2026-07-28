@@ -43,6 +43,10 @@ No la abras en modo incógnito. Si Chrome no ofrece la instalación, actualiza l
 
 Al terminar una sesión, descarga su informe Markdown y envíalo en la conversación. Con varias sesiones podré comparar repeticiones, carga, esfuerzo, sueño y molestias. Si conviene cambiar ejercicios, series o rangos, actualizaré la aplicación; al abrirla con conexión recibirá la nueva versión.
 
+## Sesiones adaptadas
+
+Las rutinas A, B y C funcionan como guías. Cuando una sesión aprobada necesite otros ejercicios, la aplicación puede recibir una **sesión adaptada** con fecha y nombre propios. Al iniciarla se crea una rutina temporal con solo los ejercicios prescritos; la guía original no se modifica ni obliga a mostrar ejercicios omitidos. El calentamiento puede aparecer separado y no se guarda como una serie efectiva.
+
 ## Nota importante
 
 Los datos no se sincronizan automáticamente entre móvil y ordenador. Es una decisión de privacidad y simplicidad de esta primera versión: usa la exportación JSON para mover o proteger tu historial. La aplicación sirve para registrar y observar tendencias; una molestia importante, persistente o que obligue a parar requiere valoración de un profesional sanitario.
