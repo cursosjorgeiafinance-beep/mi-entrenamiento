@@ -2,110 +2,131 @@
   "schemaVersion": 1,
   "kind": "training-next-session",
   "status": "approved",
-  "prescriptionId": "calistenia-parque-2026-07-29-v1",
-  "approvedAt": "2026-07-28T21:39:19.599268Z",
-  "sessionType": "adapted",
-  "routineId": "sesion-2026-07-29-calistenia-parque",
-  "routineName": "Miércoles 29 de julio — Calistenia en parque",
+  "prescriptionId": "full-body-a-2026-08-01-v1",
+  "approvedAt": "2026-08-01T17:49:03.718375Z",
+  "sessionType": "template",
+  "routineId": "full-body-a",
+  "routineName": "Full body A",
   "sourceProposal": {
-    "proposalId": "calistenia-parque-2026-07-29-v1",
-    "createdAt": "2026-07-28T21:01:06.631Z"
+    "proposalId": "full-body-a-2026-08-01-v1",
+    "createdAt": "2026-08-01T17:48:16.6973304Z"
   },
   "exercises": [
     {
-      "name": "Zancadas alternas",
-      "target": "10–15 por pierna · RPE 6–7",
-      "restSeconds": 120,
+      "name": "Sentadilla trasera barra alta",
+      "target": "6–8 · RPE 7",
+      "restSeconds": 180,
       "sets": [
         {
-          "reps": "10–15 por pierna",
-          "weight": "",
-          "effort": "RPE 6–7"
+          "reps": "6–8",
+          "weight": "60",
+          "effort": "RPE 7"
         },
         {
-          "reps": "10–15 por pierna",
-          "weight": "",
-          "effort": "RPE 6–7"
+          "reps": "6–8",
+          "weight": "60",
+          "effort": "RPE 7"
+        }
+      ]
+    },
+    {
+      "name": "Press banca",
+      "target": "6–8 · RPE 7 · 60 kg solo si no hay molestia",
+      "restSeconds": 180,
+      "sets": [
+        {
+          "reps": "6–8",
+          "weight": "60",
+          "effort": "RPE 7 · sin molestia"
+        },
+        {
+          "reps": "6–8",
+          "weight": "60",
+          "effort": "RPE 7 · sin molestia"
         }
       ]
     },
     {
       "name": "Dominadas pronas o neutras",
-      "target": "6 repeticiones · RPE 6–7",
+      "target": "5–8 · RPE 7",
       "restSeconds": 180,
       "sets": [
         {
-          "reps": "6",
+          "reps": "5–8",
           "weight": "",
-          "effort": "RPE 6–7"
+          "effort": "RPE 7"
         },
         {
-          "reps": "6",
+          "reps": "5–8",
           "weight": "",
-          "effort": "RPE 6–7"
+          "effort": "RPE 7"
         }
       ]
     },
     {
-      "name": "Fondos en paralelas o apoyados en banco",
-      "target": "6–10 · RPE 6–7",
+      "name": "Hip thrust",
+      "target": "8–12 · RPE 7 · carga por determinar en el calentamiento",
       "restSeconds": 120,
       "sets": [
         {
-          "reps": "6–10",
+          "reps": "8–12",
           "weight": "",
-          "effort": "RPE 6–7"
+          "effort": "RPE 7"
         },
         {
-          "reps": "6–10",
+          "reps": "8–12",
           "weight": "",
-          "effort": "RPE 6–7"
+          "effort": "RPE 7"
         }
       ]
     },
     {
-      "name": "Remo invertido fácil",
-      "target": "10–15 · RPE 6–7",
-      "restSeconds": 120,
+      "name": "Elevación lateral en polea",
+      "target": "12–18 · RPE 8 · carga por determinar en el calentamiento",
+      "restSeconds": 90,
       "sets": [
         {
-          "reps": "10–15",
+          "reps": "12–18",
           "weight": "",
-          "effort": "RPE 6–7"
+          "effort": "RPE 8"
         },
         {
-          "reps": "10–15",
+          "reps": "12–18",
           "weight": "",
-          "effort": "RPE 6–7"
+          "effort": "RPE 8"
         }
       ]
     },
     {
-      "name": "Dead bug controlado",
-      "target": "8–12 por lado · RPE 6–7",
-      "restSeconds": 60,
+      "name": "Pallof press",
+      "target": "10–12 por lado",
+      "restSeconds": 90,
       "sets": [
         {
-          "reps": "8–12 por lado",
-          "weight": "",
-          "effort": "RPE 6–7"
+          "reps": "10–12 por lado",
+          "weight": "11,25",
+          "effort": ""
         },
         {
-          "reps": "8–12 por lado",
-          "weight": "",
-          "effort": "RPE 6–7"
+          "reps": "10–12 por lado",
+          "weight": "11,25",
+          "effort": ""
         }
       ]
     }
   ],
-  "sourceRoutine": {
-    "routineId": "calistenia-c",
-    "routineName": "Calistenia C"
-  },
   "warmup": [
     {
       "name": "Comba",
-      "target": "6–7 minutos · ritmo cómodo · RPE 4–5"
+      "target": "6–7 minutos · ritmo cómodo"
+    },
+    {
+      "name": "Aproximaciones de sentadilla trasera barra alta",
+      "target": "20 kg × 8 · 40 kg × 5 · 50 kg × 2"
+    },
+    {
+      "name": "Aproximaciones de press banca",
+      "target": "30 kg × 8 · 45 kg × 3 · continuar solo sin molestia"
     }
   ]
 }
