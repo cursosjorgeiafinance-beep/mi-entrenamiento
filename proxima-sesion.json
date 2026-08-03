@@ -2,131 +2,171 @@
   "schemaVersion": 1,
   "kind": "training-next-session",
   "status": "approved",
-  "prescriptionId": "full-body-b-2026-08-03-v1",
-  "approvedAt": "2026-08-01T23:19:23.660502Z",
-  "sessionType": "template",
-  "routineId": "full-body-b",
-  "routineName": "Full body B",
+  "prescriptionId": "full-body-c-2026-08-03-v2",
+  "approvedAt": "2026-08-03T13:09:42.880080Z",
+  "sessionType": "adapted",
+  "routineId": "sesion-2026-08-03-full-body-c-gimnasio",
+  "routineName": "3 de agosto — Full body C adaptada en gimnasio",
   "sourceProposal": {
-    "proposalId": "full-body-b-2026-08-03-v1",
-    "createdAt": "2026-08-01T23:18:20.742Z"
+    "proposalId": "full-body-c-2026-08-03-v2",
+    "createdAt": "2026-08-03T13:08:45.645Z"
   },
   "exercises": [
     {
-      "name": "Sentadilla búlgara",
-      "target": "8–10 por pierna · RPE 7 · realizar solo con rodilla y tobillo estables",
+      "name": "Prensa inclinada",
+      "target": "10–15 · RPE 6–7 · mantener estable la pierna derecha",
       "restSeconds": 180,
       "sets": [
         {
-          "reps": "8–10 por pierna",
-          "weight": "25",
-          "effort": "RPE 7"
+          "reps": "10–15",
+          "weight": "",
+          "effort": "RPE 6–7"
         },
         {
-          "reps": "8–10 por pierna",
-          "weight": "25",
-          "effort": "RPE 7"
+          "reps": "10–15",
+          "weight": "",
+          "effort": "RPE 6–7"
         }
       ]
     },
     {
-      "name": "Press inclinado con mancuernas",
-      "target": "8–12 · RPE 7–8 · 30 kg totales · banco en posición 4 · realizar solo sin molestia de hombro",
+      "name": "Press militar",
+      "target": "8–12 · RPE 6–7 · continuar solo con el hombro cómodo",
       "restSeconds": 180,
       "sets": [
         {
           "reps": "8–12",
-          "weight": "30",
-          "effort": "RPE 7–8"
+          "weight": "",
+          "effort": "RPE 6–7"
         },
         {
           "reps": "8–12",
-          "weight": "30",
-          "effort": "RPE 7–8"
+          "weight": "",
+          "effort": "RPE 6–7"
         }
-      ]
+      ],
+      "plannedName": "Press de hombro en máquina"
     },
     {
-      "name": "Remo con pecho apoyado",
-      "target": "8–12 · RPE 7 · 65 kg máximo; bajar un salto si supera el RPE objetivo",
-      "restSeconds": 180,
-      "sets": [
-        {
-          "reps": "8–12",
-          "weight": "65",
-          "effort": "RPE 7"
-        },
-        {
-          "reps": "8–12",
-          "weight": "65",
-          "effort": "RPE 7"
-        }
-      ]
-    },
-    {
-      "name": "Curl femoral sentado",
-      "target": "10–15 · detener al llegar a RPE 8",
+      "name": "Jalón neutro",
+      "target": "10–12 · RPE 7",
       "restSeconds": 120,
       "sets": [
         {
-          "reps": "10–15",
-          "weight": "50",
-          "effort": "RPE 8"
+          "reps": "10–12",
+          "weight": "",
+          "effort": "RPE 7"
         },
         {
-          "reps": "10–15",
-          "weight": "50",
-          "effort": "RPE 8"
+          "reps": "10–12",
+          "weight": "",
+          "effort": "RPE 7"
         }
       ]
     },
     {
-      "name": "Gemelo en prensa o máquina",
-      "target": "10–15 · RPE 8 · realizar en máquina Smith",
+      "name": "Peso muerto rumano",
+      "target": "12–15 · RPE 7 · ejecución ligera y controlada",
+      "restSeconds": 150,
+      "sets": [
+        {
+          "reps": "12–15",
+          "weight": "",
+          "effort": "RPE 7"
+        },
+        {
+          "reps": "12–15",
+          "weight": "",
+          "effort": "RPE 7"
+        }
+      ],
+      "plannedName": "Puente de glúteo en máquina"
+    },
+    {
+      "name": "Pec deck",
+      "target": "12–15 · RPE 7",
       "restSeconds": 120,
       "sets": [
         {
+          "reps": "12–15",
+          "weight": "",
+          "effort": "RPE 7"
+        },
+        {
+          "reps": "12–15",
+          "weight": "",
+          "effort": "RPE 7"
+        }
+      ],
+      "plannedName": "Pec deck o flexiones"
+    },
+    {
+      "name": "Curl en polea",
+      "target": "10–15 · RPE 6–7",
+      "restSeconds": 90,
+      "sets": [
+        {
           "reps": "10–15",
-          "weight": "60",
-          "effort": "RPE 8"
+          "weight": "",
+          "effort": "RPE 6–7"
         },
         {
           "reps": "10–15",
-          "weight": "60",
-          "effort": "RPE 8"
+          "weight": "",
+          "effort": "RPE 6–7"
         }
       ]
     },
     {
-      "name": "Dead bug controlado",
-      "target": "6–10 por lado · ejecución lenta",
-      "restSeconds": 60,
+      "name": "Extensión de tríceps en polea",
+      "target": "10–15 · RPE 6–7",
+      "restSeconds": 90,
       "sets": [
         {
-          "reps": "6–10 por lado",
+          "reps": "10–15",
           "weight": "",
-          "effort": ""
+          "effort": "RPE 6–7"
         },
         {
-          "reps": "6–10 por lado",
+          "reps": "10–15",
           "weight": "",
-          "effort": ""
+          "effort": "RPE 6–7"
         }
       ]
     }
   ],
+  "sourceRoutine": {
+    "routineId": "full-body-c",
+    "routineName": "Full body C"
+  },
   "warmup": [
     {
-      "name": "Aproximaciones de sentadilla búlgara",
-      "target": "Peso corporal × 6 por pierna · 15 kg totales × 4 por pierna · 20 kg totales × 2 por pierna · comprobar estabilidad de rodilla y tobillo"
+      "name": "Aproximaciones de prensa inclinada",
+      "target": "Carga ligera × 8 · carga media × 5 · carga cercana × 2"
     },
     {
-      "name": "Aproximaciones de press inclinado con mancuernas",
-      "target": "20 kg totales × 5 · 25 kg totales × 2 · banco en posición 4 · continuar solo sin molestia de hombro"
+      "name": "Aproximaciones de press militar",
+      "target": "Barra × 8 · carga ligera × 3 · continuar solo con el hombro cómodo"
     },
     {
-      "name": "Aproximación de remo con pecho apoyado",
-      "target": "1 serie ligera × 6 repeticiones"
+      "name": "Aproximación de jalón neutro",
+      "target": "1 serie fácil × 6"
+    },
+    {
+      "name": "Aproximaciones de peso muerto rumano",
+      "target": "Barra × 8 · carga ligera × 4"
+    },
+    {
+      "name": "Aproximación de pec deck",
+      "target": "1 serie fácil × 6"
+    },
+    {
+      "name": "Aproximación de curl en polea",
+      "target": "1 serie fácil × 6"
+    },
+    {
+      "name": "Aproximación de extensión de tríceps en polea",
+      "target": "1 serie fácil × 6"
     }
   ]
 }
