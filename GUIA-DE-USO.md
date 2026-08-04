@@ -7,7 +7,7 @@ Esta es una aplicación personal que funciona sin cuenta y guarda el historial *
 1. Abre la aplicación en el navegador.
 2. En **Rutinas**, pulsa **Nueva** y escribe el nombre, ejercicios, series y objetivo de repeticiones.
 3. Pulsa **Empezar** en la rutina que corresponda.
-4. Tras cada serie, apunta repeticiones, peso y RPE o RIR. La próxima vez, se cargarán los valores de tu última sesión de ese ejercicio.
+4. Tras cada serie, apunta repeticiones, peso y RPE o RIR. La próxima vez, se cargarán los valores de tu última sesión de ese ejercicio. Editar un campo o iniciar su descanso confirma la serie; una serie precargada que no se confirme se guarda vacía. Sustituye siempre los rangos planificados por el resultado exacto.
 5. Al acabar, registra energía, sueño, molestias y un comentario, y pulsa **Finalizar y guardar sesión**.
 6. Desde el resumen final, descarga el archivo Markdown y súbelo a esta conversación si quieres analizar la sesión.
 

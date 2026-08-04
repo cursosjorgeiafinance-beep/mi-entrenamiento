@@ -366,6 +366,9 @@ function updateRestTimer(){
 function startRest(exerciseId,setIndex){
   const exercise=workout?.exercises.find(item=>item.id===exerciseId);
   if(!exercise)return;
+  const set=exercise.sets[setIndex];
+  if(!set)return;
+  set._touched=true;
   clearTimeout(restDoneTimeout);
   restDoneTimeout=null;
   $$('.rest-button').forEach(button=>button.classList.remove('rest-done'));
@@ -533,8 +536,21 @@ function discardWorkout(){
   renderHome();
   view('homeView');
 }
+function hasRangeResult(value){return /\d(?:[.,]\d+)?\s*[–—-]\s*\d/.test(String(value||''))}
+function ambiguousCompletedSets(){
+  return workout.exercises.reduce((total,exercise)=>total+exercise.sets.filter(set=>
+    set._touched&&(hasRangeResult(set.reps)||hasRangeResult(set.effort))
+  ).length,0);
+}
+function finalizeRecordedSet(set){
+  if(!set._touched){set.reps='';set.weight='';set.effort=''}
+  delete set._touched;
+  return set;
+}
 function finish(){
   if(!workout.exercises.length)return alert('Añade al menos un ejercicio.');
+  const ambiguous=ambiguousCompletedSets();
+  if(ambiguous)return alert('Revisa '+ambiguous+' serie(s) confirmada(s): las repeticiones y el RPE realizados deben ser valores exactos, no rangos de la planificación.');
   clearInterval(interval);
   cancelRest(false);
   workout.duration=elapsed;
@@ -547,7 +563,7 @@ function finish(){
   workout.exercises.forEach(exercise=>{
     delete exercise.plannedTarget;
     delete exercise.prescribed;
-    exercise.sets.forEach(set=>delete set._touched);
+    exercise.sets.forEach(finalizeRecordedSet);
   });
   consumePrescription(workout.prescriptionId);
   data.sessions.unshift(workout);
