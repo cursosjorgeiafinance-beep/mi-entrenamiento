@@ -9,7 +9,7 @@ const DEFAULT_ROUTINES=[
     {name:"Press banca",sets:2,reps:"6–8 · RPE 7"},
     {name:"Dominadas pronas o neutras",sets:2,reps:"5–8 · RPE 7"},
     {name:"Hip thrust",sets:2,reps:"8–12 · RPE 7"},
-    {name:"Elevación lateral en polea",sets:2,reps:"12–18 · RPE 8"},
+    {name:"Elevación lateral con mancuernas",sets:2,reps:"12–18 · RPE 8"},
     {name:"Pallof press",sets:2,reps:"10–12 por lado"}
   ]},
   {id:"full-body-b",name:"Full body B",description:"Unilateral y espalda apoyada · RPE 7–8",exercises:[
@@ -66,7 +66,7 @@ const ALTERNATIVE_GROUPS=[
   ["Press banca","Press inclinado con mancuernas","Press de hombro en máquina","Pec deck o flexiones","Fondos en paralelas","Flexiones con pies elevados","Flexiones"],
   ["Dominadas pronas o neutras","Dominadas pronas","Dominadas supinas o neutras","Dominadas asistidas o escapulares","Jalón neutro"],
   ["Hip thrust","Peso muerto rumano","Puente de glúteo en máquina","Puente de glúteo unilateral","Curl femoral sentado","Curl femoral deslizante o nórdico asistido"],
-  ["Elevación lateral en polea","Elevación lateral con mancuernas","Press de hombro en máquina"],
+  ["Elevación lateral con mancuernas","Press de hombro en máquina"],
   ["Pallof press","Dead bug controlado","Plancha lateral","Hollow body hold"],
   ["Remo con pecho apoyado","Remo invertido","Remo invertido con pausa","Remo invertido fácil","Remo con mancuerna"],
   ["Gemelo en prensa o máquina","Elevaciones de gemelo"]
@@ -76,6 +76,9 @@ function loadData(){
     const stored=JSON.parse(localStorage.getItem(KEY)||"null");
     if(stored&&Array.isArray(stored.routines)&&Array.isArray(stored.sessions)){
       if(!Array.isArray(stored.consumedPrescriptionIds))stored.consumedPrescriptionIds=[];
+      const fullBodyA=stored.routines.find(routine=>routine.id==="full-body-a");
+      const legacyLateral=fullBodyA?.exercises?.find(exercise=>exercise.name==="Elevación lateral en polea");
+      if(legacyLateral)legacyLateral.name="Elevación lateral con mancuernas";
       const existingIds=new Set(stored.routines.map(routine=>routine.id));
       DEFAULT_ROUTINES.forEach(routine=>{
         if(!existingIds.has(routine.id))stored.routines.push(structuredClone(routine));
