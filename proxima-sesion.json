@@ -2,14 +2,14 @@
   "schemaVersion": 1,
   "kind": "training-next-session",
   "status": "approved",
-  "prescriptionId": "full-body-b-2026-08-06-v2",
-  "approvedAt": "2026-08-06T13:41:54.356044Z",
+  "prescriptionId": "full-body-b-2026-08-06-v3",
+  "approvedAt": "2026-08-06T14:19:48.462858Z",
   "sessionType": "template",
   "routineId": "full-body-b",
   "routineName": "Full body B",
   "sourceProposal": {
-    "proposalId": "full-body-b-2026-08-06-v2",
-    "createdAt": "2026-08-06T13:41:08Z"
+    "proposalId": "full-body-b-2026-08-06-v3",
+    "createdAt": "2026-08-06T14:18:08Z"
   },
   "exercises": [
     {
