@@ -2,148 +2,143 @@
   "schemaVersion": 1,
   "kind": "training-next-session",
   "status": "approved",
-  "prescriptionId": "full-body-a-2026-08-10-v1",
-  "approvedAt": "2026-08-10T17:41:48.982147Z",
-  "sessionType": "adapted",
-  "routineId": "sesion-2026-08-10-full-body-a-gimnasio",
-  "routineName": "10 de agosto — Full body A adaptada en gimnasio",
+  "prescriptionId": "full-body-b-2026-08-14-v1",
+  "approvedAt": "2026-08-14T13:04:58.075821Z",
+  "sessionType": "template",
+  "routineId": "full-body-b",
+  "routineName": "Full body B",
   "sourceProposal": {
-    "proposalId": "full-body-a-2026-08-10-v1",
-    "createdAt": "2026-08-10T17:40:57Z"
+    "proposalId": "full-body-b-2026-08-14-v1",
+    "createdAt": "2026-08-14T13:03:34Z"
   },
   "exercises": [
     {
-      "name": "Sentadilla trasera barra alta",
-      "target": "6–8 · RPE 7 · 60 kg solo con la pierna derecha estable",
+      "name": "Sentadilla búlgara",
+      "target": "8–10 por pierna · RPE 7 · realizar 25 kg solo con la pierna derecha estable",
       "restSeconds": 180,
       "sets": [
         {
-          "reps": "6–8",
-          "weight": "60",
+          "reps": "8–10 por pierna",
+          "weight": "25",
           "effort": "RPE 7"
         },
         {
-          "reps": "6–8",
-          "weight": "60",
+          "reps": "8–10 por pierna",
+          "weight": "25",
           "effort": "RPE 7"
         }
       ]
     },
     {
-      "name": "Press banca",
-      "target": "6–8 · RPE 7 · 60 kg solo con el hombro cómodo",
+      "name": "Press inclinado con mancuernas",
+      "target": "8–12 · RPE 7–8 · 30 kg totales",
       "restSeconds": 180,
       "sets": [
         {
-          "reps": "6–8",
-          "weight": "60",
-          "effort": "RPE 7"
+          "reps": "8–12",
+          "weight": "30",
+          "effort": "RPE 7–8"
         },
         {
-          "reps": "6–8",
-          "weight": "60",
-          "effort": "RPE 7"
+          "reps": "8–12",
+          "weight": "30",
+          "effort": "RPE 7–8"
         }
       ]
     },
     {
-      "name": "Dominadas pronas o neutras",
-      "target": "5–8 · RPE 7",
-      "restSeconds": 180,
-      "sets": [
-        {
-          "reps": "5–8",
-          "weight": "",
-          "effort": "RPE 7"
-        },
-        {
-          "reps": "5–8",
-          "weight": "",
-          "effort": "RPE 7"
-        }
-      ]
-    },
-    {
-      "name": "Peso muerto rumano",
+      "name": "Remo con pecho apoyado",
       "target": "8–12 · RPE 7",
-      "restSeconds": 150,
+      "restSeconds": 180,
       "sets": [
         {
           "reps": "8–12",
-          "weight": "60",
+          "weight": "67,5",
           "effort": "RPE 7"
         },
         {
           "reps": "8–12",
-          "weight": "60",
+          "weight": "67,5",
           "effort": "RPE 7"
         }
-      ],
-      "plannedName": "Hip thrust"
+      ]
     },
     {
-      "name": "Elevación lateral con mancuernas",
-      "target": "12–18 · RPE 8 · carga por determinar en el calentamiento",
-      "restSeconds": 90,
+      "name": "Curl femoral sentado",
+      "target": "10–15 · detener al llegar a RPE 8",
+      "restSeconds": 120,
       "sets": [
         {
-          "reps": "12–18",
-          "weight": "",
+          "reps": "10–15",
+          "weight": "50",
           "effort": "RPE 8"
         },
         {
-          "reps": "12–18",
-          "weight": "",
+          "reps": "10–15",
+          "weight": "50",
           "effort": "RPE 8"
         }
       ]
     },
     {
-      "name": "Pallof press",
-      "target": "10–12 por lado",
-      "restSeconds": 90,
+      "name": "Gemelo en prensa o máquina",
+      "target": "10–15 · RPE 8 · realizar en máquina Smith con repeticiones lentas y sin rebote",
+      "restSeconds": 120,
       "sets": [
         {
-          "reps": "10–12 por lado",
-          "weight": "13,75",
+          "reps": "10–15",
+          "weight": "60",
+          "effort": "RPE 8"
+        },
+        {
+          "reps": "10–15",
+          "weight": "60",
+          "effort": "RPE 8"
+        }
+      ]
+    },
+    {
+      "name": "Dead bug controlado",
+      "target": "6–10 por lado · ejecución lenta",
+      "restSeconds": 60,
+      "sets": [
+        {
+          "reps": "6–10 por lado",
+          "weight": "",
           "effort": ""
         },
         {
-          "reps": "10–12 por lado",
-          "weight": "13,75",
+          "reps": "6–10 por lado",
+          "weight": "",
           "effort": ""
         }
       ]
     }
   ],
-  "sourceRoutine": {
-    "routineId": "full-body-a",
-    "routineName": "Full body A"
-  },
   "warmup": [
     {
-      "name": "Aproximaciones de sentadilla trasera barra alta",
-      "target": "20 kg ×8 · 40 kg ×5 · 50 kg ×2 · continuar solo con la pierna derecha estable"
+      "name": "Sentadilla búlgara",
+      "target": "Peso corporal ×6, 15 kg totales ×4 y 20 kg totales ×2 por pierna"
     },
     {
-      "name": "Aproximaciones de press banca",
-      "target": "30 kg ×8 · 45 kg ×3 · continuar solo con el hombro cómodo"
+      "name": "Press inclinado con mancuernas",
+      "target": "20 kg totales ×5 y 25 kg totales ×2"
     },
     {
-      "name": "Aproximación de dominadas pronas o neutras",
-      "target": "1 serie fácil ×3–4"
+      "name": "Remo con pecho apoyado",
+      "target": "1 serie ligera de 6–8 repeticiones"
     },
     {
-      "name": "Aproximaciones de peso muerto rumano",
-      "target": "Barra ×8 · 40 kg ×4"
+      "name": "Curl femoral sentado",
+      "target": "1 serie ligera de 8 repeticiones"
     },
     {
-      "name": "Aproximación de elevación lateral con mancuernas",
-      "target": "Mancuernas ligeras ×8 · seleccionar una carga inferior a la última para alcanzar RPE 8"
+      "name": "Gemelo en prensa o máquina",
+      "target": "1 serie controlada de 8–10 repeticiones"
     },
     {
-      "name": "Aproximación de Pallof press",
-      "target": "1 serie ligera ×6 por lado"
+      "name": "Dead bug controlado",
+      "target": "1 serie de 3 repeticiones por lado"
     }
   ]
 }
