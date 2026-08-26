@@ -2,14 +2,14 @@
   "schemaVersion": 1,
   "kind": "training-next-session",
   "status": "approved",
-  "prescriptionId": "full-body-c-2026-08-27-v1",
-  "approvedAt": "2026-08-26T16:37:22.547458Z",
+  "prescriptionId": "full-body-c-2026-08-27-v2",
+  "approvedAt": "2026-08-26T21:25:14.304440Z",
   "sessionType": "adapted",
   "routineId": "sesion-2026-08-27-full-body-c-gimnasio",
   "routineName": "27 de agosto — Full body C adaptada en gimnasio",
   "sourceProposal": {
-    "proposalId": "full-body-c-2026-08-27-v1",
-    "createdAt": "2026-08-26T16:36:08Z"
+    "proposalId": "full-body-c-2026-08-27-v2",
+    "createdAt": "2026-08-26T21:26:00Z"
   },
   "exercises": [
     {
