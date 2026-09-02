@@ -2,114 +2,115 @@
   "schemaVersion": 1,
   "kind": "training-next-session",
   "status": "approved",
-  "prescriptionId": "full-body-a-2026-09-02-v2",
-  "approvedAt": "2026-08-31T21:42:38.771451Z",
+  "prescriptionId": "full-body-b-2026-09-03-v2",
+  "approvedAt": "2026-09-02T17:32:01.428151Z",
   "sessionType": "template",
-  "routineId": "full-body-a",
-  "routineName": "Full body A",
+  "routineId": "full-body-b",
+  "routineName": "Full body B",
   "sourceProposal": {
-    "proposalId": "full-body-a-2026-09-02-v2",
-    "createdAt": "2026-08-31T21:40:05.273Z"
+    "proposalId": "full-body-b-2026-09-03-v2",
+    "createdAt": "2026-09-02T17:31:12.668Z"
   },
   "exercises": [
     {
-      "name": "Sentadilla trasera barra alta",
-      "target": "6–8 · RPE 7 · 65 kg",
+      "name": "Sentadilla búlgara",
+      "target": "8–10 por pierna · RPE 7 · 30 kg totales · comenzar con 8 repeticiones por pierna",
       "restSeconds": 180,
       "sets": [
         {
-          "reps": "6–8",
-          "weight": "65",
+          "reps": "8–10 por pierna",
+          "weight": "30",
           "effort": "RPE 7"
         },
         {
-          "reps": "6–8",
-          "weight": "65",
+          "reps": "8–10 por pierna",
+          "weight": "30",
           "effort": "RPE 7"
         }
       ]
     },
     {
-      "name": "Press banca",
-      "target": "6–8 · RPE 7 · 65 kg",
+      "name": "Press inclinado con mancuernas",
+      "target": "8–12 · RPE 7–8 · 35 kg totales",
       "restSeconds": 180,
-      "sets": [
-        {
-          "reps": "6–8",
-          "weight": "65",
-          "effort": "RPE 7"
-        },
-        {
-          "reps": "6–8",
-          "weight": "65",
-          "effort": "RPE 7"
-        }
-      ]
-    },
-    {
-      "name": "Dominadas pronas o neutras",
-      "target": "5–8 · RPE 7 · peso corporal",
-      "restSeconds": 180,
-      "sets": [
-        {
-          "reps": "5–8",
-          "weight": "",
-          "effort": "RPE 7"
-        },
-        {
-          "reps": "5–8",
-          "weight": "",
-          "effort": "RPE 7"
-        }
-      ]
-    },
-    {
-      "name": "Hip thrust",
-      "target": "8–12 · RPE 7 · 80 kg",
-      "restSeconds": 150,
       "sets": [
         {
           "reps": "8–12",
-          "weight": "80",
+          "weight": "35",
+          "effort": "RPE 7–8"
+        },
+        {
+          "reps": "8–12",
+          "weight": "35",
+          "effort": "RPE 7–8"
+        }
+      ]
+    },
+    {
+      "name": "Remo con pecho apoyado",
+      "target": "8–12 · RPE 7 · 70 kg",
+      "restSeconds": 180,
+      "sets": [
+        {
+          "reps": "8–12",
+          "weight": "70",
           "effort": "RPE 7"
         },
         {
           "reps": "8–12",
-          "weight": "80",
+          "weight": "70",
           "effort": "RPE 7"
         }
       ]
     },
     {
-      "name": "Elevación lateral con mancuernas",
-      "target": "12–18 · RPE 8 · 14 kg",
-      "restSeconds": 90,
+      "name": "Curl femoral sentado",
+      "target": "10–15 · RPE 8 · 55 kg",
+      "restSeconds": 120,
       "sets": [
         {
-          "reps": "12–18",
-          "weight": "14",
+          "reps": "10–15",
+          "weight": "55",
           "effort": "RPE 8"
         },
         {
-          "reps": "12–18",
-          "weight": "14",
+          "reps": "10–15",
+          "weight": "55",
           "effort": "RPE 8"
         }
       ]
     },
     {
-      "name": "Pallof press",
-      "target": "10–12 por lado · RPE 7 · 13,75 kg",
-      "restSeconds": 90,
+      "name": "Gemelo en máquina Smith",
+      "target": "10–15 · RPE 8 · 60 kg",
+      "restSeconds": 120,
       "sets": [
         {
-          "reps": "10–12 por lado",
-          "weight": "13,75",
+          "reps": "10–15",
+          "weight": "60",
+          "effort": "RPE 8"
+        },
+        {
+          "reps": "10–15",
+          "weight": "60",
+          "effort": "RPE 8"
+        }
+      ],
+      "plannedName": "Gemelo en prensa o máquina"
+    },
+    {
+      "name": "Dead bug controlado",
+      "target": "6–10 por lado · RPE 7",
+      "restSeconds": 60,
+      "sets": [
+        {
+          "reps": "6–10 por lado",
+          "weight": "",
           "effort": "RPE 7"
         },
         {
-          "reps": "10–12 por lado",
-          "weight": "13,75",
+          "reps": "6–10 por lado",
+          "weight": "",
           "effort": "RPE 7"
         }
       ]
@@ -117,28 +118,28 @@
   ],
   "warmup": [
     {
-      "name": "Aproximaciones de sentadilla trasera barra alta",
-      "target": "20 kg ×8 · 45 kg ×4 · 55 kg ×2"
+      "name": "Aproximaciones de sentadilla búlgara",
+      "target": "Peso corporal ×6 · 20 kg totales ×4 · 25 kg totales ×2 por pierna"
     },
     {
-      "name": "Aproximaciones de press banca",
-      "target": "30 kg ×8 · 50 kg ×3"
+      "name": "Aproximaciones de press inclinado con mancuernas",
+      "target": "20 kg totales ×5 · 30 kg totales ×2"
     },
     {
-      "name": "Aproximación de dominadas pronas o neutras",
-      "target": "1 serie fácil ×3–4"
+      "name": "Aproximación de remo con pecho apoyado",
+      "target": "40 kg ×6–8"
     },
     {
-      "name": "Aproximaciones de hip thrust",
-      "target": "40 kg ×8 · 60 kg ×4"
+      "name": "Aproximación de curl femoral sentado",
+      "target": "30 kg ×8"
     },
     {
-      "name": "Aproximación de elevación lateral con mancuernas",
-      "target": "Carga ligera ×8"
+      "name": "Aproximación de gemelo en máquina Smith",
+      "target": "40 kg ×8–10"
     },
     {
-      "name": "Aproximación de Pallof press",
-      "target": "Carga ligera ×6 por lado"
+      "name": "Aproximación de dead bug controlado",
+      "target": "1 serie ×3 por lado"
     }
   ]
 }
