@@ -1,52 +1,41 @@
-# Mi entrenamiento — guía rápida
+# Mi entrenamiento
 
-Esta es una aplicación personal que funciona sin cuenta y guarda el historial **solo en el navegador de este dispositivo**.
+Aplicación diaria para Android: <https://cursosjorgeiafinance-beep.github.io/mi-entrenamiento/>. Guarda tus resultados en el navegador del dispositivo y funciona sin conexión. El dashboard de Sites es una vista independiente del histórico.
 
-## Primer uso
+## Entrenar en orden
 
-1. Abre la aplicación en el navegador.
-2. En **Rutinas**, pulsa **Nueva** y escribe el nombre, ejercicios, series y objetivo de repeticiones.
-3. Pulsa **Empezar** en la rutina que corresponda.
-4. Tras cada serie, apunta repeticiones, peso y RPE o RIR. La próxima vez, se cargarán los valores de tu última sesión de ese ejercicio. Editar un campo o iniciar su descanso confirma la serie; una serie precargada que no se confirme se guarda vacía. Sustituye siempre los rangos planificados por el resultado exacto.
-5. Al acabar, registra energía, sueño, molestias y un comentario, y pulsa **Finalizar y guardar sesión**.
-6. Desde el resumen final, descarga el archivo Markdown y súbelo a esta conversación si quieres analizar la sesión.
+- Pulsa **Actualizar plan** con conexión para descargar una sesión preparada o las tres sesiones de un ciclo.
+- En un ciclo, A está disponible primero. B se desbloquea al finalizar y guardar A; C, al guardar B. Las demás rutinas no pueden iniciarse mientras ese ciclo esté pendiente.
+- Las guías A-B-C también respetan el orden del historial cuando todavía no se ha cargado un ciclo. Sin historial, empiezan por A.
+- Puedes cambiar ejercicios y valores dentro del entrenamiento. Editar un campo o iniciar su descanso confirma la serie; los valores precargados sin confirmar se guardan vacíos. Escribe repeticiones y esfuerzo reales, sin rangos.
+- Cerrar el móvil guarda un borrador. **Descartar sesión** mantiene el turno. Una sesión sin series realizadas no avanza.
+- Al terminar C aparece **Compartir ciclo para analizar**. Durante el descanso, envía el archivo y pide preparar las siguientes A, B y C juntas. El siguiente ciclo se carga tras revisar y autorizar las tres fichas.
+- Actualizar el plan no sustituye una sesión en curso ni un ciclo incompleto, y volver a descargar un ciclo terminado no lo reinicia.
 
-## Copias y exportaciones
+## Compartir sin descargar el mes
 
-- **Markdown:** un informe legible de una sesión concreta.
-- **JSON:** copia de seguridad completa (rutinas e historial). Guárdala periódicamente en Drive, Archivos o donde prefieras.
-- **CSV:** historial en formato que puedes abrir con Excel o Google Sheets.
+Al guardar una sesión, pulsa **Compartir sesión**: métricas y observaciones viajan juntas en un único archivo JSON. Puedes recuperarlo abriendo cualquier sesión del historial.
 
-Para restaurar un móvil nuevo: abre la aplicación, entra en **Historial** y pulsa **Importar copia**. Importar sustituye el historial que ya hubiera en ese dispositivo.
+En **Historial → Compartir para analizar** puedes escoger el último ciclo, la última sesión o todo el historial. Un ciclo puede abarcar dos meses. Si todavía está incompleto, el archivo lo indica. En historiales antiguos sin ID de ciclo se toma el tramo más reciente desde A hasta la última sesión A/B/C registrada.
 
-## Uso sin conexión e instalación
+Android abre el selector de aplicaciones cuando admite compartir archivos. Si no está disponible, se descarga el JSON; adjúntalo a la conversación. También tienes **Descargar archivo**. No necesitas añadir el mensual ni descargar observaciones aparte. **Solo observaciones** sigue disponible.
 
-### Android (Chrome)
+Compartir no ejecuta un análisis automáticamente. Codex analiza el archivo que adjuntes y prepara las siguientes sesiones cuando se lo pidas. No se envían resultados a GitHub.
 
-1. Abre en Chrome: <https://mi-entrenamiento-jorge.topojopo.chatgpt.site>
-2. Pulsa **Continue with ChatGPT** e inicia sesión con la misma cuenta. La aplicación es privada.
-3. Cuando aparezca **Mi entrenamiento**, pulsa **Instalar** en la parte superior.
-4. Si ese botón no aparece, abre el menú de tres puntos de Chrome y elige **Instalar aplicación** o **Añadir a pantalla de inicio**.
-5. Confirma la instalación. El icono **Entreno** aparecerá entre tus aplicaciones.
-6. Ábrela una vez con conexión para completar la descarga. Después funcionará sin Internet.
+## Archivo y copias
 
-No la abras en modo incógnito. Si Chrome no ofrece la instalación, actualiza la página una vez y vuelve a abrir su menú.
+- **Archivo mensual**: métricas JSON o CSV para conservar el histórico y hacer el cierre del mes.
+- **Descargar copia**: rutinas, historial, plan descargado, progreso y sesión activa. Guárdala periódicamente.
+- **Importar copia**: restaura ese contenido sustituyendo los datos del dispositivo. Las copias antiguas también sirven; si no incluyen plan, tendrás que pulsar **Actualizar plan**.
 
-### Windows / escritorio (Chrome o Edge)
+El historial del móvil y el del ordenador no se sincronizan solos. Borrar los datos del sitio elimina los registros locales; una actualización del código mantiene el almacenamiento. Una copia anterior restaura el estado de aquella fecha.
 
-1. Abre <https://mi-entrenamiento-jorge.topojopo.chatgpt.site> en Chrome o Edge.
-2. Pulsa **Continue with ChatGPT** si se solicita.
-3. Usa el icono de instalación de la barra de direcciones o el menú: **Instalar Mi entrenamiento**.
-4. Se abrirá en su propia ventana y seguirá disponible sin conexión.
+## Instalar en Android
 
-## Cómo ajustaré tu rutina
+1. Abre la URL de GitHub Pages en Chrome, fuera de incógnito.
+2. Pulsa **Instalar** o elige **Instalar aplicación / Añadir a pantalla de inicio** en el menú de Chrome.
+3. Abre una vez con conexión y pulsa **Actualizar plan**. Después puedes entrenar sin Internet.
 
-Al terminar una sesión, descarga su informe Markdown y envíalo en la conversación. Con varias sesiones podré comparar repeticiones, carga, esfuerzo, sueño y molestias. Si conviene cambiar ejercicios, series o rangos, actualizaré la aplicación; al abrirla con conexión recibirá la nueva versión.
+Para recibir una actualización del código, abre con conexión, cierra la aplicación y vuelve a abrirla. No borres los datos del sitio.
 
-## Sesiones adaptadas
-
-Las rutinas A, B y C funcionan como guías. Cuando una sesión aprobada necesite otros ejercicios, la aplicación puede recibir una **sesión adaptada** con fecha y nombre propios. Al iniciarla se crea una rutina temporal con solo los ejercicios prescritos; la guía original no se modifica ni obliga a mostrar ejercicios omitidos. El calentamiento puede aparecer separado y no se guarda como una serie efectiva.
-
-## Nota importante
-
-Los datos no se sincronizan automáticamente entre móvil y ordenador. Es una decisión de privacidad y simplicidad de esta primera versión: usa la exportación JSON para mover o proteger tu historial. La aplicación sirve para registrar y observar tendencias; una molestia importante, persistente o que obligue a parar requiere valoración de un profesional sanitario.
+El repositorio y las prescripciones de `proxima-sesion.json` son públicos. Solo contienen código, ejercicios y cargas autorizadas. Métricas, comentarios, sueño y molestias permanecen en tus dispositivos y en los archivos que decidas compartir.

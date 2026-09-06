@@ -21,6 +21,20 @@ body {
 
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; border: 0; border-radius: 12px; padding: 12px 16px; font-weight: 700; }
+button:disabled { cursor: default; opacity: .45; }
+[hidden] { display: none !important; }
+.cycle-progress { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; list-style: none; padding: 0; margin: 14px 0; }
+.cycle-progress li { display: grid; gap: 4px; padding: 12px 4px; text-align: center; border: 1px solid var(--line); border-radius: 12px; }
+.cycle-progress strong { font-size: 1.3rem; }
+.cycle-progress span { font-size: .72rem; }
+.cycle-progress .current { border-color: var(--accent); background: #123c30; }
+.cycle-progress .complete { color: var(--accent); }
+.cycle-progress .locked { color: var(--muted); }
+.lock-note { font-size: .8rem; }
+.routine-item > div { min-width: 0; }
+.history-item { color: var(--ink); }
+.export-card > label:has(#analysisScope) { max-width: none; }
+.dialog-actions { flex-wrap: wrap; }
 button:focus-visible, input:focus, select:focus, textarea:focus { outline: 3px solid #8ae3c6; outline-offset: 2px; }
 .topbar, main, nav { max-width: 760px; margin: auto; }
 .topbar { display: flex; justify-content: space-between; align-items: center; padding: 22px 18px 14px; }

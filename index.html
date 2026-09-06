@@ -16,12 +16,15 @@
       <section id="homeView" class="view active">
         <article class="hero"><p>Hoy</p><h2 id="todayLabel"></h2><span>Registra sin conexión. Tus datos se quedan en este dispositivo.</span></article>
         <div class="actions"><button id="startBtn" class="primary">Empezar entrenamiento</button><button data-view="routinesView" class="secondary">Mis rutinas</button></div>
-        <button id="refreshPrescriptionBtn" class="text full planning-refresh">Actualizar próxima sesión</button>
+        <p id="sequenceStatus" class="muted" role="status"></p>
+        <button id="refreshPrescriptionBtn" class="text full planning-refresh">Actualizar plan</button>
         <section id="nextSessionCard" class="card prescription-card" hidden>
-          <p class="eyebrow">PRÓXIMA SESIÓN APROBADA</p>
+          <p class="eyebrow">TU PLAN PREPARADO</p>
+          <ol id="cycleProgress" class="cycle-progress" aria-label="Progreso A, B y C" hidden></ol>
           <h2 id="nextSessionName"></h2>
           <p id="nextSessionSummary"></p>
           <button id="startPrescriptionBtn" class="primary full">Empezar con la propuesta</button>
+          <button id="shareCycleHomeBtn" class="primary full" hidden>Compartir ciclo para analizar</button>
         </section>
         <section class="card"><div class="section-title"><h2>Últimas sesiones</h2><button data-view="historyView" class="text">Ver historial</button></div><div id="recentSessions" class="empty">Aún no hay sesiones. Empieza con una rutina.</div></section>
       </section>
@@ -34,8 +37,15 @@
         <div class="section-title"><div><p class="eyebrow">REGISTRO LOCAL</p><h2>Historial</h2></div></div>
         <div id="historyList" class="stack"></div>
         <section class="card export-card">
-          <h2>Datos para análisis</h2>
-          <p>Las métricas se exportan por mes. Las observaciones se descargan por separado desde cada sesión.</p>
+          <h2>Compartir para analizar</h2>
+          <p>Un solo archivo con métricas y observaciones, aunque las sesiones sean de meses distintos.</p>
+          <label>Qué quieres compartir<select id="analysisScope"><option value="cycle">Último ciclo A-B-C</option><option value="latest">Última sesión</option><option value="all">Todo el historial</option></select></label>
+          <div class="actions"><button id="shareAnalysisBtn" class="primary">Compartir</button><button id="downloadAnalysisBtn" class="secondary">Descargar archivo</button></div>
+          <p id="analysisStatus" role="status" aria-live="polite"></p>
+        </section>
+        <section class="card export-card">
+          <h2>Archivo mensual</h2>
+          <p>Conserva las métricas de un mes para el histórico y su cierre mensual.</p>
           <label>Mes<input id="exportMonth" type="month" /></label>
           <div class="actions"><button id="exportMonthBtn" class="primary">Métricas JSON</button><button id="csvBtn" class="secondary">CSV del mes</button></div>
           <button id="exportRoutinesBtn" class="text">Descargar rutinas por separado</button>
@@ -51,7 +61,8 @@
 
     <dialog id="routineDialog"><form id="routineForm"><div class="section-title"><h2 id="routineDialogTitle">Nueva rutina</h2><button type="button" data-close-dialog="routineDialog" class="icon" aria-label="Cerrar">×</button></div><input id="routineId" type="hidden" /><label>Nombre de la rutina<input id="routineName" required placeholder="Ej. Cuerpo completo A" /></label><label>Descripción opcional<input id="routineDescription" placeholder="Ej. Lunes y jueves" /></label><div class="section-title"><h3>Ejercicios</h3><button type="button" id="addRoutineExercise" class="secondary small">+ Añadir</button></div><div id="routineExercises" class="stack"></div><div class="dialog-actions"><button type="button" data-close-dialog="routineDialog" class="secondary">Cancelar</button><button id="saveRoutineBtn" type="submit" class="primary">Guardar rutina</button></div></form></dialog>
     <dialog id="exerciseDialog"><form id="exerciseForm"><div class="section-title"><h2>Añadir ejercicio</h2><button type="button" data-close-dialog="exerciseDialog" class="icon" aria-label="Cerrar">×</button></div><label>Nombre<input id="quickExerciseName" required placeholder="Ej. Remo con mancuerna" /></label><label>Series previstas<input id="quickExerciseSets" type="number" min="1" value="3" /></label><label>Repeticiones objetivo<input id="quickExerciseReps" placeholder="Ej. 8–12" /></label><div class="dialog-actions"><button type="button" data-close-dialog="exerciseDialog" class="secondary">Cancelar</button><button type="submit" class="primary">Añadir</button></div></form></dialog>
-    <dialog id="sessionDialog"><div id="sessionDetail"></div><div class="dialog-actions"><button id="downloadSessionBtn" class="primary">Descargar observaciones</button><button id="closeSessionBtn" class="secondary">Cerrar</button></div></dialog>
+    <dialog id="sessionDialog"><div id="sessionDetail"></div><p>Comparte métricas y observaciones juntas para analizar esta sesión.</p><div class="dialog-actions"><button id="shareSessionBtn" class="primary">Compartir sesión</button><button id="downloadAnalysisSessionBtn" class="secondary">Descargar archivo</button></div><p id="sessionShareStatus" role="status" aria-live="polite"></p><div class="dialog-actions"><button id="downloadSessionBtn" class="text">Solo observaciones</button><button id="closeSessionBtn" class="secondary">Cerrar</button></div></dialog>
+    <script src="training-flow.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
-const CACHE="entreno-v14";
-const FILES=["./index.html","./styles.css","./app.js","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
+const CACHE="entreno-v15-ciclos";
+const FILES=["./index.html","./styles.css","./training-flow.js","./app.js","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{
   event.waitUntil(
@@ -20,6 +20,7 @@ self.addEventListener("activate",event=>{
 
 self.addEventListener("fetch",event=>{
   if(event.request.method!=="GET")return;
+  if(new URL(event.request.url).pathname.endsWith('/proxima-sesion.json'))return;
   if(event.request.mode==="navigate"){
     event.respondWith(
       caches.match(event.request)

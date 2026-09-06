@@ -127,20 +127,21 @@ function validPrescription(value){
 }
 function loadCachedPrescription(){
   try{
-    const cached=JSON.parse(localStorage.getItem(PRESCRIPTION_KEY)||"null");
-    return validPrescription(cached)?cached:null;
+    const cached=data.trainingPlan||JSON.parse(localStorage.getItem(PRESCRIPTION_KEY)||"null");
+    return validPlan(cached)?cached:null;
   }catch{
     return null;
   }
 }
+function validPlan(value){return validPrescription(value)||TrainingFlow.validCycle(value,validPrescription)}
 let data=loadData(), workout=null, interval=null, elapsed=0, pendingInstall=null, lastFinished=null;
 let nextPrescription=loadCachedPrescription();
 let restTimer=null, restInterval=null, restDoneTimeout=null, audioContext=null;
 const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const sameName=(left,right)=>String(left||"").trim().toLocaleLowerCase("es")===String(right||"").trim().toLocaleLowerCase("es");
-function prescriptionConsumed(prescription){return data.consumedPrescriptionIds.includes(prescription?.prescriptionId)}
-function availablePrescription(){return validPrescription(nextPrescription)&&!prescriptionConsumed(nextPrescription)?nextPrescription:null}
+function prescriptionConsumed(prescription){return TrainingFlow.consumed(data,prescription?.prescriptionId)}
+function availablePrescription(){return validPlan(nextPrescription)?TrainingFlow.pending(nextPrescription,data):null}
 function prescriptionMatchesRoutine(prescription,routine){
   if(!prescription||!routine)return false;
   if(prescription.sessionType==="adapted")return false;
@@ -160,7 +161,7 @@ function routineFromPrescription(prescription){
     name:prescription.routineName,
     description:prescription.sourceRoutine
       ?`Sesión adaptada desde ${prescription.sourceRoutine.routineName}`
-      :'Sesión adaptada',
+      :'Sesión preparada',
     exercises:prescription.exercises.map(exercise=>({
       name:exercise.plannedName||exercise.name,
       sets:exercise.sets.length,
@@ -170,7 +171,7 @@ function routineFromPrescription(prescription){
 }
 function consumePrescription(id){
   if(!id||data.consumedPrescriptionIds.includes(id))return;
-  data.consumedPrescriptionIds=[...data.consumedPrescriptionIds,id].slice(-30);
+  data.consumedPrescriptionIds=[...data.consumedPrescriptionIds,id];
 }
 function exerciseCatalog(){
   const catalog=new Map();
@@ -206,36 +207,51 @@ function view(id){$$('.view').forEach(v=>v.classList.toggle('active',v.id===id))
 function renderNextPrescription(){
   const card=$('#nextSessionCard'), prescription=availablePrescription();
   if(!card)return;
-  card.hidden=!prescription;
+  const cycle=nextPrescription?.kind==='training-cycle'?nextPrescription:null;
+  card.hidden=!prescription&&!cycle;
+  $('#cycleProgress').hidden=!cycle;
+  $('#startPrescriptionBtn').hidden=!prescription;
+  $('#cycleProgress').innerHTML=cycle?cycle.sessions.map((s,i)=>`<li class="${prescriptionConsumed(s)?'complete':s===prescription?'current':'locked'}"><strong>${TrainingFlow.ORDER[i]}</strong><span>${prescriptionConsumed(s)?'Completada':s===prescription?'Disponible':'Bloqueada'}</span></li>`).join(''):'';
+  const expected=TrainingFlow.expectedSlot(nextPrescription,data);
+  $('#sequenceStatus').textContent=cycle&&!prescription?'Ciclo completado · descanso y revisión':`Orden A → B → C · ahora toca ${expected}`;
+  $('#startBtn').disabled=Boolean(cycle&&!prescription&&!workout);
+  $('#startBtn').textContent=workout?'Continuar entrenamiento':prescription?`Empezar sesión ${TrainingFlow.slot(prescription)||''}`:'Empezar entrenamiento';
+  $('#shareCycleHomeBtn').hidden=!(cycle&&!prescription);
+  if(cycle&&!prescription){
+    $('#nextSessionName').textContent='Ciclo completado';
+    $('#nextSessionSummary').textContent='Durante el descanso, comparte A, B y C para revisar sus resultados y preparar las tres siguientes.';
+  }
   if(!prescription)return;
   $('#nextSessionName').textContent=prescription.routineName;
-  $('#nextSessionSummary').textContent=`${prescription.exercises.length} ejercicios · propuesta ${prescription.prescriptionId}`;
+  $('#nextSessionSummary').textContent=cycle?`${prescription.exercises.length} ejercicios · ${cycle.sessions.filter(s=>prescriptionConsumed(s)).length} de 3 sesiones completadas`:`${prescription.exercises.length} ejercicios · sesión preparada`;
 }
 async function refreshNextPrescription({notify=false}={}){
+  if(workout){if(notify)alert('Termina o descarta la sesión en curso antes de actualizar el plan.');return;}
   try{
     const response=await fetch(`${PRESCRIPTION_URL}?v=${Date.now()}`,{cache:'no-store'});
     if(!response.ok)throw Error(`HTTP ${response.status}`);
     const candidate=await response.json();
-    if(candidate?.kind==="training-next-session"&&candidate?.status==="empty"){
-      nextPrescription=null;
-      localStorage.removeItem(PRESCRIPTION_KEY);
-      renderNextPrescription();
-      if(notify)alert('Todavía no hay una próxima sesión aprobada.');
-      return;
-    }
-    if(!validPrescription(candidate))throw Error('Formato de prescripción no válido');
-    nextPrescription=candidate;
-    localStorage.setItem(PRESCRIPTION_KEY,JSON.stringify(candidate));
+    const empty=candidate?.kind==='training-next-session'&&candidate?.status==='empty';
+    if(!empty&&!validPlan(candidate))throw Error('El plan recibido no tiene un formato válido.');
+    const incoming=empty?null:candidate;
+    const blocked=TrainingFlow.replacementError(nextPrescription,incoming,data,Boolean(workout));
+    if(blocked){if(notify)alert(blocked);return;}
+    const previous=data.trainingPlan;
+    data.trainingPlan=incoming;
+    try{save()}catch(error){data.trainingPlan=previous;throw error}
+    nextPrescription=incoming;
+    try{localStorage.removeItem(PRESCRIPTION_KEY)}catch{}
     renderNextPrescription();
+    renderRoutines();
     if(notify){
-      alert(prescriptionConsumed(candidate)
-        ?'Esta propuesta ya se utilizó en este dispositivo.'
-        :`Próxima sesión actualizada: ${candidate.routineName}.`);
+      alert(!incoming?'Todavía no hay un plan nuevo.':incoming.kind==='training-cycle'
+        ?'Ciclo A → B → C descargado. Está disponible sin conexión.'
+        :prescriptionConsumed(candidate)?'Esta propuesta ya se utilizó en este dispositivo.':`Próxima sesión actualizada: ${candidate.routineName}.`);
     }
   }catch{
     nextPrescription=loadCachedPrescription();
     renderNextPrescription();
-    if(notify)alert(nextPrescription?'Sin conexión. Se conserva la última propuesta descargada.':'No se pudo buscar una propuesta nueva.');
+    if(notify)alert(nextPrescription?'No se pudo actualizar. Se conserva el último plan descargado.':'No se pudo descargar un plan válido.');
   }
 }
 function renderHome(){
@@ -244,11 +260,27 @@ function renderHome(){
   const root=$('#recentSessions'), recent=data.sessions.slice(0,3);
   root.innerHTML=recent.length?recent.map(s=>`<button class="history-item" data-session="${s.id}"><span><strong>${esc(s.routineName)}</strong><p>${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}${s.place?' · '+esc(s.place):''} · ${s.exercises.length} ejercicios</p></span><span>›</span></button>`).join(''):'Aún no hay sesiones. Empieza con una rutina.';
 }
-function renderRoutines(){const r=$('#routineList');r.innerHTML=data.routines.length?data.routines.map(x=>`<article class="routine-item"><div><strong>${esc(x.name)}</strong><p>${esc(x.description||'Sin descripción')} · ${x.exercises.length} ejercicios</p></div><div><button class="primary small" data-start="${x.id}">Empezar</button><button class="text" data-edit="${x.id}">Editar</button></div></article>`).join(''):'<div class="empty">Crea tu primera rutina. Puedes cambiarla cuando quieras.</div>'}
+function startForRoutine(routine){
+  const next=availablePrescription();
+  if(nextPrescription?.kind==='training-cycle'&&next&&TrainingFlow.slot(routine)===TrainingFlow.slot(next))return next;
+  return prescriptionForRoutine(routine);
+}
+function renderRoutines(){
+  $('#routineList').innerHTML=data.routines.map(routine=>{
+    const prescription=startForRoutine(routine),reason=TrainingFlow.startError(nextPrescription,data,routine,prescription);
+    return `<article class="routine-item"><div><strong>${esc(routine.name)}</strong><p>${esc(routine.description||'Sin descripción')} · ${routine.exercises.length} ejercicios</p>${reason?`<p class="lock-note">${esc(reason)}</p>`:''}</div><div><button class="primary small" data-start="${esc(routine.id)}" ${reason?'disabled':''}>${reason?'Bloqueada':'Empezar'}</button><button class="text" data-edit="${esc(routine.id)}">Editar</button></div></article>`;
+  }).join('');
+}
 function renderHistory(){
   const r=$('#historyList');
   r.innerHTML=data.sessions.length?data.sessions.map(s=>`<button class="history-item" data-session="${s.id}"><span><strong>${esc(s.routineName)}</strong><p>${new Date(s.date+'T12:00').toLocaleDateString('es-ES')}${s.place?' · '+esc(s.place):''} · Energía: ${esc(s.energy||'—')} · RPE ${s.overallRpe}</p></span><span>›</span></button>`).join(''):'<div class="empty">Todavía no hay sesiones guardadas.</div>';
   if(!$('#exportMonth').value)$('#exportMonth').value=defaultExportMonth();
+  renderAnalysisSelection();
+}
+function renderAnalysisSelection(){
+  const scope=$('#analysisScope').value||'cycle',sessions=analysisSelection(scope);
+  const complete=sessions.map(TrainingFlow.slot).join('')==='ABC';
+  $('#analysisStatus').textContent=sessions.length?`${sessions.length} sesión(es)${scope==='cycle'?complete?' · ciclo completo':' · ciclo parcial':''} con métricas y observaciones.`:'Todavía no hay sesiones para compartir.';
 }
 function openRoutine(routine){$('#routineDialogTitle').textContent=routine?'Editar rutina':'Nueva rutina';$('#routineId').value=routine?.id||'';$('#routineName').value=routine?.name||'';$('#routineDescription').value=routine?.description||'';$('#routineExercises').innerHTML='';(routine?.exercises||[{name:'',sets:3,reps:''}]).forEach(addRoutineEditor);$('#routineDialog').showModal()}
 function addRoutineEditor(ex={name:'',sets:3,reps:''}){const row=document.createElement('div');row.className='editor-row';row.innerHTML=`<label>Ejercicio<input class="e-name" required value="${esc(ex.name)}" placeholder="Ej. Dominadas" /></label><label>Series<input class="e-sets" type="number" min="1" value="${ex.sets||3}" /></label><label>Objetivo<input class="e-reps" value="${esc(ex.reps||'')}" placeholder="Ej. 5–8" /></label><button type="button" class="remove-editor">×</button>`;$('#routineExercises').append(row)}
@@ -262,12 +294,17 @@ function startWorkout(routine,prescription=prescriptionForRoutine(routine)){
     view('workoutView');
     return;
   }
+  if(!routine)return;
+  const reason=TrainingFlow.startError(nextPrescription,data,routine,prescription);
+  if(reason)return alert(reason);
   cancelRest(false);
   workout={
     id:uid(),
+    routineId:routine.id,
     routineName:routine.name,
     date:dateInput(),
     startedAt:new Date().toISOString(),
+    ...(nextPrescription?.kind==='training-cycle'?{cycleId:nextPrescription.cycleId,cyclePosition:TrainingFlow.ORDER.indexOf(TrainingFlow.slot(prescription))+1}:{}),
     ...(prescription?{
       prescriptionId:prescription.prescriptionId,
       prescriptionApprovedAt:prescription.approvedAt,
@@ -503,6 +540,7 @@ function restoreDraft(){
   try{
     const draft=JSON.parse(localStorage.getItem(DRAFT_KEY)||'null');
     if(!draft?.workout?.exercises?.length)return false;
+    if(data.sessions.some(s=>s.id===draft.workout.id)){localStorage.removeItem(DRAFT_KEY);return false;}
     workout=draft.workout;
     restTimer=draft.restTimer||null;
     const fields=draft.fields||{};
@@ -551,11 +589,15 @@ function finalizeRecordedSet(set){
   return set;
 }
 function finish(){
+  if(!workout)return;
   if(!workout.exercises.length)return alert('Añade al menos un ejercicio.');
+  if(!workout.exercises.some(e=>e.sets.some(s=>s._touched&&(s.reps||s.weight||s.effort))))return alert('Registra al menos una serie realizada. Una sesión vacía no avanza el ciclo.');
   const ambiguous=ambiguousCompletedSets();
   if(ambiguous)return alert('Revisa '+ambiguous+' serie(s) confirmada(s): las repeticiones y el RPE realizados deben ser valores exactos, no rangos de la planificación.');
   clearInterval(interval);
   cancelRest(false);
+  const originalWorkout=workout,originalData=structuredClone(data);
+  workout=structuredClone(workout);
   workout.duration=elapsed;
   workout.place=$('#trainingPlace').value.trim();
   workout.energy=$('#energy').value;
@@ -570,12 +612,16 @@ function finish(){
   });
   consumePrescription(workout.prescriptionId);
   data.sessions.unshift(workout);
-  save();
-  localStorage.removeItem(DRAFT_KEY);
+  try{save()}catch{
+    data=originalData;workout=originalWorkout;runTimer();
+    return alert('No se pudo guardar. La sesión sigue abierta y el ciclo no ha avanzado.');
+  }
+  try{localStorage.removeItem(DRAFT_KEY)}catch{}
   lastFinished=workout;
-  renderHome();
-  showSession(workout);
   workout=null;
+  renderHome();
+  view('homeView');
+  showSession(lastFinished);
 }
 function observationsMarkdown(s){
   const substitutions=s.exercises.filter(e=>e.plannedName&&e.plannedName!==e.name);
@@ -605,6 +651,8 @@ function sessionMetrics(s){
     date:s.date,
     startedAt:s.startedAt,
     routineName:s.routineName,
+    ...(s.routineId?{routineId:s.routineId}:{}),
+    ...(s.cycleId?{cycleId:s.cycleId,cyclePosition:s.cyclePosition}:{}),
     ...(s.prescriptionId?{prescriptionId:s.prescriptionId}:{}),
     ...(s.sessionType?{sessionType:s.sessionType}:{}),
     ...(s.sourceRoutine?{sourceRoutine:s.sourceRoutine}:{}),
@@ -641,6 +689,42 @@ function exportMonthlyMetrics(){
   };
   download(`metricas_${month}.json`,JSON.stringify(payload,null,2),'application/json');
 }
+function analysisSelection(scope){
+  if(scope==='session')return lastFinished?[lastFinished]:[];
+  if(scope==='latest')return TrainingFlow.chronological(data.sessions).slice(-1);
+  if(scope==='all')return data.sessions;
+  return TrainingFlow.latestCycle(data.sessions);
+}
+async function shareAnalysis(scope,{downloadOnly=false}={}){
+  const sessions=analysisSelection(scope);
+  if(!sessions.length)return alert('Todavía no hay sesiones para compartir.');
+  const payload=TrainingFlow.analysisPacket(sessions,scope,sessionMetrics);
+  const name=`analisis_${scope==='cycle'?'ciclo':scope==='all'?'historial':'sesion'}_${payload.dateRange.to}_${String(sessions.at(-1).id).slice(0,8)}.json`;
+  const content=JSON.stringify(payload,null,2);
+  const status=message=>{$('#analysisStatus').textContent=message;$('#sessionShareStatus').textContent=message;};
+  if(!downloadOnly){
+    try{
+      const file=new File([content],name,{type:'application/json'});
+      if(navigator.canShare?.({files:[file]})&&navigator.share){
+        await navigator.share({files:[file],title:'Resultados de entrenamiento'});
+        status('Archivo compartido. Contiene métricas y observaciones.');
+        return;
+      }
+    }catch(error){
+      if(error.name==='AbortError'){status('Envío cancelado. Puedes compartirlo cuando quieras.');return;}
+    }
+  }
+  download(name,content,'application/json');
+  status('Archivo descargado. Adjunta este único JSON a la conversación para analizarlo.');
+}
+function startPreparedSession(){
+  const prescription=availablePrescription();
+  if(!prescription)return alert('No hay una sesión preparada disponible.');
+  startWorkout(routineFromPrescription(prescription),prescription);
+}
+function backupPayload(){
+  return {...data,trainingPlan:nextPrescription,activeDraft:workout?{workout,fields:draftFields(),restTimer}:null};
+}
 function exportRoutines(){
   const payload={
     schemaVersion:EXPORT_SCHEMA_VERSION,
@@ -663,24 +747,20 @@ document.addEventListener('click',e=>{
   if(b.dataset.closeDialog)$('#'+b.dataset.closeDialog).close();
   if(b.dataset.view)view(b.dataset.view);
   if(b.id==='startBtn'){
-    if(data.routines.length===1)startWorkout(data.routines[0]);
+    if(workout)view('workoutView');
+    else if(availablePrescription())startPreparedSession();
+    else if(data.routines.length===1)startWorkout(data.routines[0]);
     else view('routinesView');
   }
   if(b.id==='refreshPrescriptionBtn')refreshNextPrescription({notify:true});
   if(b.id==='startPrescriptionBtn'){
-    const prescription=availablePrescription();
-    if(!prescription)return alert('Esta propuesta ya no está disponible.');
-    if(prescription.sessionType==="adapted"){
-      startWorkout(routineFromPrescription(prescription),prescription);
-      return;
-    }
-    const routine=data.routines.find(item=>item.id===prescription.routineId||sameName(item.name,prescription.routineName));
-    if(!routine)return alert('La rutina de la propuesta no existe en este dispositivo.');
-    if(!prescriptionMatchesRoutine(prescription,routine))return alert('La rutina guardada en este dispositivo no coincide con la propuesta aprobada.');
-    startWorkout(routine,prescription);
+    startPreparedSession();
   }
   if(b.id==='newRoutineBtn')openRoutine();
-  if(b.dataset.start)startWorkout(data.routines.find(r=>r.id===b.dataset.start));
+  if(b.dataset.start){
+    const routine=data.routines.find(r=>r.id===b.dataset.start),prescription=startForRoutine(routine);
+    startWorkout(prescription?routineFromPrescription(prescription):routine,prescription);
+  }
   if(b.dataset.edit)openRoutine(data.routines.find(r=>r.id===b.dataset.edit));
   if(b.id==='addRoutineExercise')addRoutineEditor();
   if(b.classList.contains('remove-editor'))b.closest('.editor-row').remove();
@@ -710,10 +790,15 @@ document.addEventListener('click',e=>{
   if(b.id==='discardWorkoutBtn')discardWorkout();
   if(b.dataset.session)showSession(data.sessions.find(s=>s.id===b.dataset.session));
   if(b.id==='downloadSessionBtn')download(`observacion_${lastFinished.date}_${String(lastFinished.id).slice(0,8)}.md`,observationsMarkdown(lastFinished),'text/markdown;charset=utf-8');
+  if(b.id==='shareSessionBtn')shareAnalysis('session');
+  if(b.id==='downloadAnalysisSessionBtn')shareAnalysis('session',{downloadOnly:true});
+  if(b.id==='shareAnalysisBtn')shareAnalysis($('#analysisScope').value);
+  if(b.id==='downloadAnalysisBtn')shareAnalysis($('#analysisScope').value,{downloadOnly:true});
+  if(b.id==='shareCycleHomeBtn')shareAnalysis('cycle');
   if(b.id==='closeSessionBtn')$('#sessionDialog').close();
   if(b.id==='exportMonthBtn')exportMonthlyMetrics();
   if(b.id==='exportRoutinesBtn')exportRoutines();
-  if(b.id==='backupBtn')download(`copia-seguridad-entrenamiento_${dateInput()}.json`,JSON.stringify(data,null,2),'application/json');
+  if(b.id==='backupBtn')download(`copia-seguridad-entrenamiento_${dateInput()}.json`,JSON.stringify(backupPayload(),null,2),'application/json');
   if(b.id==='csvBtn')exportCsv();
 });
 $('#routineForm').addEventListener('submit',e=>{e.preventDefault();const exercises=$$('.editor-row').map(x=>({name:x.querySelector('.e-name').value.trim(),sets:+x.querySelector('.e-sets').value||3,reps:x.querySelector('.e-reps').value.trim()})).filter(x=>x.name);if(!exercises.length)return alert('Añade al menos un ejercicio.');const id=$('#routineId').value||uid(), r={id,name:$('#routineName').value.trim(),description:$('#routineDescription').value.trim(),exercises};const n=data.routines.findIndex(x=>x.id===id);if(n>=0)data.routines[n]=r;else data.routines.push(r);save();$('#routineDialog').close();renderRoutines();renderHome()});
@@ -746,5 +831,32 @@ $('#exerciseList').addEventListener('change',e=>{
 $('#workoutView').addEventListener('input',saveDraft);
 $('#workoutView').addEventListener('change',saveDraft);
 $('#overallRpe').addEventListener('input',e=>$('#overallRpeValue').textContent=e.target.value);
-$('#importInput').addEventListener('change',async e=>{try{const imported=JSON.parse(await e.target.files[0].text());if(!Array.isArray(imported.routines)||!Array.isArray(imported.sessions))throw Error();if(!confirm('Esto sustituirá los datos actuales de este dispositivo. ¿Continuar?'))return;if(!Array.isArray(imported.consumedPrescriptionIds))imported.consumedPrescriptionIds=[];data=imported;save();renderHome();renderRoutines();renderHistory();alert('Copia importada correctamente.')}catch{alert('No parece una copia válida de Mi entrenamiento.')}});
+$('#analysisScope').addEventListener('change',renderAnalysisSelection);
+$('#importInput').addEventListener('change',async e=>{
+  try{
+    if(!e.target.files[0])return;
+    if(workout)return alert('Finaliza o descarta la sesión en curso antes de restaurar una copia.');
+    const imported=JSON.parse(await e.target.files[0].text());
+    if(!Array.isArray(imported.routines)||!Array.isArray(imported.sessions)||(imported.trainingPlan&&!validPlan(imported.trainingPlan)))throw Error();
+    if(!confirm('Esto sustituirá los datos actuales de este dispositivo. ¿Continuar?'))return;
+    if(!Array.isArray(imported.consumedPrescriptionIds))imported.consumedPrescriptionIds=[];
+    imported.trainingPlan=imported.trainingPlan||null;
+    const previous=data,previousDraft=localStorage.getItem(DRAFT_KEY),draft=imported.activeDraft;
+    delete imported.activeDraft;
+    if(draft&&(!Array.isArray(draft.workout?.exercises)||!draft.workout?.id))throw Error();
+    try{
+      if(draft)localStorage.setItem(DRAFT_KEY,JSON.stringify(draft));else localStorage.removeItem(DRAFT_KEY);
+      data=imported;save();
+    }catch(error){
+      data=previous;
+      if(previousDraft)localStorage.setItem(DRAFT_KEY,previousDraft);else localStorage.removeItem(DRAFT_KEY);
+      throw error;
+    }
+    nextPrescription=data.trainingPlan;
+    try{localStorage.removeItem(PRESCRIPTION_KEY)}catch{}
+    renderHome();renderRoutines();renderHistory();restoreDraft();
+    alert('Copia importada. Se han restaurado el historial y el progreso del plan incluido.');
+  }catch{alert('No se pudo importar la copia. Comprueba el archivo y el espacio disponible.');}
+  finally{e.target.value='';}
+});
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pendingInstall=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{pendingInstall.prompt();await pendingInstall.userChoice;pendingInstall=null;$('#installBtn').hidden=true};save();if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js');renderHome();restoreDraft();refreshNextPrescription();
