@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "training-cycle",
   "status": "approved",
-  "cycleId": "ciclo-abc-2026-09-23-v2",
+  "cycleId": "ciclo-abc-2026-10-02-v1",
   "sequence": [
     "A",
     "B",
@@ -13,19 +13,19 @@
       "schemaVersion": 1,
       "kind": "training-next-session",
       "status": "approved",
-      "prescriptionId": "full-body-a-2026-09-23-v2",
-      "approvedAt": "2026-09-23T20:07:09.216945Z",
+      "prescriptionId": "full-body-a-2026-10-02-v1",
+      "approvedAt": "2026-10-02T05:18:55.802908Z",
       "sessionType": "adapted",
-      "routineId": "sesion-2026-09-23-full-body-a-ciclo-v2",
-      "routineName": "Full body A · siguiente ciclo 23/09",
+      "routineId": "sesion-2026-10-02-full-body-a-ciclo-v1",
+      "routineName": "Full body A · consolidación y ajustes 02/10",
       "sourceProposal": {
-        "proposalId": "full-body-a-2026-09-23-v2",
-        "createdAt": "2026-09-23T19:56:50Z"
+        "proposalId": "full-body-a-2026-10-02-v1",
+        "createdAt": "2026-10-02T05:02:39Z"
       },
       "exercises": [
         {
           "name": "Sentadilla trasera barra alta",
-          "target": "6–8 · RPE 7 · 70 kg totales, misma profundidad controlada. Probar 7–8 por serie solo si la rodilla izquierda se siente estable, sin dolor ni cambio técnico; si la debilidad se repite en las aproximaciones, usar 65 kg o detener y evaluar. No subir carga.",
+          "target": "6–8 · RPE 7 · 70 kg totales, repetir 8+8 solo con rodilla estable y técnica habitual. No subir este ciclo. Si la debilidad reaparece al aproximar, reducir a 65 kg y comprobar; si persiste, hay dolor o cambia el movimiento, detener y evaluar.",
           "restSeconds": 180,
           "sets": [
             {
@@ -42,7 +42,7 @@
         },
         {
           "name": "Press banca",
-          "target": "6–8 · RPE 7 · probar 67,5 kg totales (+2,5 kg) solo si ese es el menor salto disponible, no hay molestia y las aproximaciones son normales; objetivo 6+6. Si no, 65 kg y 8+8 a RPE 7. Mantener 4 min de descanso y respiración cómoda.",
+          "target": "6–8 · RPE 7 · 67,5 kg totales; buscar 8+7 si mantiene RPE 7, o repetir 7+7. Mismo banco, recorrido y respiración controlada. Si el calentamiento es anormal, 65 kg y parte baja del rango; dolor de hombro o técnica alterada: detener y evaluar.",
           "restSeconds": 240,
           "sets": [
             {
@@ -59,7 +59,7 @@
         },
         {
           "name": "Dominadas pronas o neutras",
-          "target": "5–8 · RPE 7 · peso corporal +5 kg de lastre, mismo agarre. Buscar 8+8 con apoyo seguro de manos; si vuelve a resbalar, terminar la serie sin contar la repetición como limpia y evaluar agarre/superficie. No subir lastre aún.",
+          "target": "5–8 · RPE 7 · Peso corporal +5 kg de lastre; buscar 8+8 solo con apoyo seguro y RPE 7. Si 8+7 ya agota el esfuerzo objetivo, repetirlo. No subir lastre. Si resbala o pierde el recorrido, acabar la serie y evaluar superficie/apoyo; usar peso corporal si es necesario.",
           "restSeconds": 180,
           "sets": [
             {
@@ -76,7 +76,7 @@
         },
         {
           "name": "Hip thrust",
-          "target": "8–12 · RPE 7 · 95 kg en discos añadidos en la misma Spirit SP-6533; buscar 12+11, o repetir 11+11 si el RPE sube. No sumar resistencia no cuantificada de la máquina.",
+          "target": "8–12 · RPE 7 · 95 kg en discos añadidos en la misma Spirit SP-6533; repetir hasta 12+12 a RPE 7 sin forzar. No subir ni sumar resistencia propia desconocida. Reconsiderar solo tras otra exposición cómoda y si desea cambiar.",
           "restSeconds": 180,
           "sets": [
             {
@@ -93,7 +93,7 @@
         },
         {
           "name": "Elevación lateral con mancuernas",
-          "target": "10–12 · RPE 8 · 9 kg por mano (18 kg totales); objetivo 12+12 solo si no hay impulso y mantiene RPE 8. Si el peso se siente duro, repetir 12+11 o 11+11 con control.",
+          "target": "10–12 · RPE 8 · 9 kg por mano, registrar 18 kg totales. Buscar 12+11 y después 12+12 solo con técnica y RPE 8; repetir 10–11 si lo exige el día. Mantener el rango preferido 10–12. Anotar ambas series.",
           "restSeconds": 90,
           "sets": [
             {
@@ -110,17 +110,17 @@
         },
         {
           "name": "Corte diagonal en polea alta con asa individual",
-          "target": "8–10 por lado · RPE 7 · con la misma polea y asa individual que el 20/09, probar 21,25 kg (+2,5 kg) solo si es el siguiente ajuste disponible y la técnica y comodidad se conservan; empezar en 8 por lado. Si el asa no fue la prevista, resulta incómoda o supera RPE 7, usar 18,75 kg o seleccionar desde ligero. Registrar accesorio real.",
+          "target": "8–10 por lado · RPE 7 · 21,25 kg en la misma polea y mismo accesorio habitual; 8–10 por lado, empezando en 8 con giro controlado. Acompañar con caderas y pies, sin inclinar el tronco para vencer el peso. Si la postura limita el movimiento, reducir a 18,75 kg para comprobar control; registrar el accesorio real. Si cambia el accesorio, elegir desde ligero. Descansar tras ambos lados.",
           "restSeconds": 90,
           "sets": [
             {
               "reps": "8–10 por lado",
-              "weight": "",
+              "weight": "21,25",
               "effort": "RPE 7"
             },
             {
               "reps": "8–10 por lado",
-              "weight": "",
+              "weight": "21,25",
               "effort": "RPE 7"
             }
           ],
@@ -133,20 +133,20 @@
       },
       "warmup": [
         {
-          "name": "Activación general suave y comprobación del día",
-          "target": "5 minutos suaves de caminar o bicicleta, sin fatigar. Descansar tras C y contar también boxeo y lucha. Comprobar energía, síntomas, molestias y respuesta al calentamiento antes de cada sesión. Si coinciden baja energía y calentamiento anormal, reducir a una serie efectiva por ejercicio y RPE 6–7, sin ensayar aumentos de carga. No comprimir A–B–C para recuperar días. Dolor o técnica alterada: detener ese ejercicio y evaluar."
+          "name": "Activación general y comprobación del día",
+          "target": "5 minutos de caminar o bicicleta suave, sin sprints ni fatiga. Descanso real tras C → A → descanso según respuesta → B → C, con descanso adicional si hace falta. Contar también boxeo y lucha; no comprimir sesiones para recuperar días. Antes de empezar comprobar energía, molestias y calentamiento. Si varias señales empeoran o el calentamiento resulta anormal, usar una sola serie efectiva por ejercicio a RPE 6–7, sin probar subidas. Dolor, inestabilidad persistente o coordinación alterada: detener el ejercicio y evaluar."
         },
         {
           "name": "Aproximación de Sentadilla trasera barra alta",
-          "target": "20 kg ×8 · 45 kg ×4 · 60 kg ×2; comprobar control en la parte profunda"
+          "target": "20 kg ×8 · 45 kg ×4 · 60 kg ×2"
         },
         {
           "name": "Aproximación de Press banca",
-          "target": "20 kg ×8 · 40 kg ×4 · 55 kg ×2 · 62,5 kg ×1 si se prueba 67,5"
+          "target": "20 kg ×8 · 45 kg ×4 · 60 kg ×2"
         },
         {
           "name": "Aproximación de Dominadas pronas o neutras",
-          "target": "Peso corporal ×3 · +5 kg ×1, sin fatigar; comprobar superficie y agarre"
+          "target": "Peso corporal ×3 · +5 kg ×1; comprobar apoyo de manos"
         },
         {
           "name": "Aproximación de Hip thrust",
@@ -158,7 +158,7 @@
         },
         {
           "name": "Aproximación de Corte diagonal en polea alta con asa individual",
-          "target": "Asa individual: ligera ×6/lado · 18,75 kg ×3/lado; comprobar agarre"
+          "target": "Ligera ×6/lado · 18,75 kg ×3/lado"
         }
       ]
     },
@@ -166,19 +166,19 @@
       "schemaVersion": 1,
       "kind": "training-next-session",
       "status": "approved",
-      "prescriptionId": "full-body-b-2026-09-23-v2",
-      "approvedAt": "2026-09-23T20:07:09.217646Z",
+      "prescriptionId": "full-body-b-2026-10-02-v1",
+      "approvedAt": "2026-10-02T05:18:55.803613Z",
       "sessionType": "adapted",
-      "routineId": "sesion-2026-09-23-full-body-b-ciclo-v2",
-      "routineName": "Full body B · siguiente ciclo 23/09",
+      "routineId": "sesion-2026-10-02-full-body-b-ciclo-v1",
+      "routineName": "Full body B · consolidación y ajustes 02/10",
       "sourceProposal": {
-        "proposalId": "full-body-b-2026-09-23-v2",
-        "createdAt": "2026-09-23T19:56:50Z"
+        "proposalId": "full-body-b-2026-10-02-v1",
+        "createdAt": "2026-10-02T05:02:39Z"
       },
       "exercises": [
         {
           "name": "Sentadilla búlgara",
-          "target": "8–10 por pierna · RPE 7 · 35 kg totales (17,5 kg por mano); comenzar buscando 9+9, hasta 10+10 solo con equilibrio y técnica estable. Si las últimas repeticiones vuelven a ser muy sufridas, no subir; con inestabilidad usar 30 kg totales si está disponible.",
+          "target": "8–10 por pierna · RPE 7 · 35 kg totales, 17,5 kg por mano. Buscar 10+10/lado solo con equilibrio y RPE 7; si no, repetir 9+10. Hasta 30 s entre lados y 180 s tras ambos. Si la inestabilidad persiste en las aproximaciones, reducir a 30 kg totales o detener si no se corrige.",
           "restSeconds": 180,
           "sets": [
             {
@@ -195,24 +195,24 @@
         },
         {
           "name": "Press inclinado con mancuernas",
-          "target": "8–12 · RPE 7–8 · probar 21 kg por mano (42 kg totales, +2 kg) si existe ese par; objetivo 8–10 por serie. Si el siguiente par es 22 kg por mano (+4 kg totales), probarlo solo si las aproximaciones son cómodas y 8 repeticiones quedan en RPE 7–8; si no, repetir 20 kg por mano. Mismo banco y ajuste.",
+          "target": "8–12 · RPE 7–8 · 22,5 kg por mano, registrar 45 kg totales. Repetir 8+8 limpias a RPE 7–8; buscar 9+8 únicamente si mantiene ese esfuerzo. Mismo ajuste del banco y cabeza apoyada cómoda. No subir otra vez; si no alcanza 8 dentro de RPE 8 o molesta el cuello/hombro, reducir al par inferior tolerable.",
           "restSeconds": 180,
           "sets": [
             {
               "reps": "8–12",
-              "weight": "",
+              "weight": "45",
               "effort": "RPE 7–8"
             },
             {
               "reps": "8–12",
-              "weight": "",
+              "weight": "45",
               "effort": "RPE 7–8"
             }
           ]
         },
         {
           "name": "Remo con pecho apoyado",
-          "target": "8–12 · RPE 7 · 75 kg en la misma máquina con pecho apoyado; buscar 10+9 o repetir 9+9 si sigue costando. Conservar apoyo y recorrido; no subir otra vez este ciclo.",
+          "target": "8–12 · RPE 7 · 75 kg en la misma máquina; buscar 11+10 si conserva apoyo, recorrido y RPE 7. Repetir 10+10 si ya está en el esfuerzo objetivo. Mantener 180 s; no subir carga hasta dominar todas las series.",
           "restSeconds": 180,
           "sets": [
             {
@@ -229,7 +229,7 @@
         },
         {
           "name": "Curl femoral tumbado",
-          "target": "10–15 · RPE 8 · 55 kg en la misma máquina tumbada; repetir hasta 15+15 con ejecución limpia, sin buscar otra carga todavía.",
+          "target": "10–15 · RPE 8 · 55 kg en la misma máquina tumbada, hasta 15+15 limpias a RPE 8. No forzar la última ni cambiar de máquina para sostener la cifra. Tras esta B registrar si ya es cómoda y si desea probar el menor ajuste real; no congelar indefinidamente por calendario.",
           "restSeconds": 120,
           "sets": [
             {
@@ -247,7 +247,7 @@
         },
         {
           "name": "Gemelo en máquina Smith",
-          "target": "10–15 · RPE 8 · 70 kg totales registrados en la misma Smith, incluidos los 20 kg que el usuario cuenta para la barra; objetivo 15+15 controladas. No sumar otros 20 kg al registro. Mantener carga según preferencia actual.",
+          "target": "10–15 · RPE 8 · 70 kg totales registrados, incluidos los 20 kg que cuentas de barra; no sumarlos de nuevo. Hasta 15+15 controladas @8 y apoyo cómodo. Si molesta el cuello, detener y evaluar colocación. Después de esta exposición valorar el menor incremento real si está cómodo y quiere subir.",
           "restSeconds": 120,
           "sets": [
             {
@@ -265,16 +265,16 @@
         },
         {
           "name": "Plancha alta sobre manos y pies",
-          "target": "40–60 s · RPE 7 · plancha alta sobre manos y pies, brazos extendidos, 2 series. Repetir 60 s si tronco estable y muñecas/hombros cómodos. Registrar posición de manos; no aumentar palanca ni duración automáticamente.",
+          "target": "40–60 s · RPE 7 · Plancha alta sobre manos y pies, brazos extendidos. Repetir hasta 60+60 s con tronco estable y muñecas/hombros cómodos, sin exceder RPE 7. Registrar posición de manos respecto a hombros. Alternativa si no tolera apoyo: dead bug conocido 2×8–10/lado @7, pausa 3 s, 60 s de descanso.",
           "restSeconds": 90,
           "sets": [
             {
-              "reps": "40–60 segundos",
+              "reps": "40–60 s",
               "weight": "",
               "effort": "RPE 7"
             },
             {
-              "reps": "40–60 segundos",
+              "reps": "40–60 s",
               "weight": "",
               "effort": "RPE 7"
             }
@@ -288,32 +288,32 @@
       },
       "warmup": [
         {
-          "name": "Activación general suave y comprobación del día",
-          "target": "5 minutos suaves de caminar o bicicleta, sin fatigar. Descansar tras C y contar también boxeo y lucha. Comprobar energía, síntomas, molestias y respuesta al calentamiento antes de cada sesión. Si coinciden baja energía y calentamiento anormal, reducir a una serie efectiva por ejercicio y RPE 6–7, sin ensayar aumentos de carga. No comprimir A–B–C para recuperar días. Dolor o técnica alterada: detener ese ejercicio y evaluar."
+          "name": "Activación general y comprobación del día",
+          "target": "5 minutos de caminar o bicicleta suave, sin sprints ni fatiga. Descanso real tras C → A → descanso según respuesta → B → C, con descanso adicional si hace falta. Contar también boxeo y lucha; no comprimir sesiones para recuperar días. Antes de empezar comprobar energía, molestias y calentamiento. Si varias señales empeoran o el calentamiento resulta anormal, usar una sola serie efectiva por ejercicio a RPE 6–7, sin probar subidas. Dolor, inestabilidad persistente o coordinación alterada: detener el ejercicio y evaluar."
         },
         {
           "name": "Aproximación de Sentadilla búlgara",
-          "target": "Peso corporal ×6/lado · 20 kg totales ×4/lado · 30 kg ×2/lado"
+          "target": "Peso corporal ×6/lado · par ligero ×4/lado · 35 kg totales ×2/lado"
         },
         {
           "name": "Aproximación de Press inclinado con mancuernas",
-          "target": "10 kg por mano ×6 · 16 kg por mano ×3 · siguiente par ×1–2, sin fatigar"
+          "target": "Par ligero ×6–8 · 15 kg/mano ×4 · 20 kg/mano ×2"
         },
         {
           "name": "Aproximación de Remo con pecho apoyado",
-          "target": "40 kg ×6 · 60 kg ×3 · 70 kg ×1–2"
+          "target": "Ligera ×6–8 · unos 50 kg ×4 · unos 65 kg ×2, según ajustes reales"
         },
         {
           "name": "Aproximación de Curl femoral tumbado",
-          "target": "30 kg ×8; comprobar ajuste mecánico"
+          "target": "Ajuste ligero ×6–8 · ajuste medio ×3"
         },
         {
           "name": "Aproximación de Gemelo en máquina Smith",
-          "target": "40 kg totales registrados ×8 · 60 kg ×3; comprobar apoyo"
+          "target": "Carga ligera ×8 · carga media ×4, con la misma cuenta de barra"
         },
         {
           "name": "Aproximación de Plancha alta sobre manos y pies",
-          "target": "Prueba de 10 s en la posición habitual, respirando"
+          "target": "10–15 s de comprobación sin fatiga"
         }
       ]
     },
@@ -321,20 +321,20 @@
       "schemaVersion": 1,
       "kind": "training-next-session",
       "status": "approved",
-      "prescriptionId": "full-body-c-2026-09-23-v2",
-      "approvedAt": "2026-09-23T20:07:09.218316Z",
+      "prescriptionId": "full-body-c-2026-10-02-v1",
+      "approvedAt": "2026-10-02T05:18:55.804297Z",
       "sessionType": "adapted",
-      "routineId": "sesion-2026-09-23-full-body-c-ciclo-v2",
-      "routineName": "Full body C · siguiente ciclo 23/09",
+      "routineId": "sesion-2026-10-02-full-body-c-ciclo-v1",
+      "routineName": "Full body C · consolidación y ajustes 02/10",
       "sourceProposal": {
-        "proposalId": "full-body-c-2026-09-23-v2",
-        "createdAt": "2026-09-23T19:56:50Z"
+        "proposalId": "full-body-c-2026-10-02-v1",
+        "createdAt": "2026-10-02T05:02:39Z"
       },
       "exercises": [
         {
           "name": "Prensa inclinada",
-          "target": "10–15 · RPE 6–7 · 120 kg en la misma prensa; 12–15 por serie según calentamiento, hasta 15+15 si sigue en RPE ≤7. Mantener por petición expresa; no forzar el techo.",
-          "restSeconds": 180,
+          "target": "10–15 · RPE 6–7 · 120 kg en la misma prensa, 12–15 por serie; hasta 15+15 si sigue a RPE 6–7. Mantener este ciclo y registrar comodidad. No realizar más de 15 para añadir esfuerzo.",
+          "restSeconds": 150,
           "sets": [
             {
               "reps": "10–15",
@@ -350,7 +350,7 @@
         },
         {
           "name": "Press militar",
-          "target": "8–12 · RPE 6–7 · 40 kg totales en press militar; repetir 8+8 con respiración y tronco estables. Si la primera serie cuesta más, conservar 150 s y no forzar la novena; reducir a 35 kg si 8 supera RPE 7 o se altera la técnica.",
+          "target": "8–12 · RPE 6–7 · 40 kg totales; buscar 9+9 solo si ambas series mantienen RPE 6–7, respiración coordinada y tronco estable. Si 8 ya llega a RPE 7, repetir 8+9 o 8+8 según respuesta. No subir peso; con técnica alterada o RPE >7, reducir al ajuste tolerable, 35 kg si es montable.",
           "restSeconds": 150,
           "sets": [
             {
@@ -368,8 +368,8 @@
         },
         {
           "name": "Jalón neutro",
-          "target": "10–12 · RPE 6–7 · 67 kg en la misma polea y agarre; repetir 12+12 si conserva RPE ≤7. El siguiente salto conocido es 77 kg (+10 kg), demasiado grande para probarlo en C. Registrar el accesorio real.",
-          "restSeconds": 120,
+          "target": "10–12 · RPE 6–7 · 67 kg en la misma polea y agarre; repetir hasta 12+12 a RPE 6–7. No añadir el salto de 10 kg. Anotar el accesorio real y conservarlo; al cambiar polea/agarre, escoger desde ligero.",
+          "restSeconds": 150,
           "sets": [
             {
               "reps": "10–12",
@@ -385,7 +385,7 @@
         },
         {
           "name": "Peso muerto rumano",
-          "target": "12–15 · RPE 6–7 · probar 62,5 kg totales (+2,5 kg) solo si es un salto montable, el agarre es firme y 12 repeticiones quedan en RPE ≤7; objetivo 12+12. Si no, 60 kg y 15+15 controladas. Parar si se desliza la barra.",
+          "target": "12–15 · RPE 6–7 · Probar 62,5 kg totales (+2,5 kg; +4,2 %) solo si ese ajuste es montable y el agarre es firme; empezar en 12+12 sin superar RPE 7. Si no está disponible o 12 exige más de RPE 7, volver a 60 kg, 12–15 por serie. Terminar la serie si la barra desliza. Registrar carga realmente escogida.",
           "restSeconds": 150,
           "sets": [
             {
@@ -403,17 +403,17 @@
         },
         {
           "name": "Pec deck",
-          "target": "12–15 · RPE 6–7 · 65 kg en la misma máquina; 12–15 por serie. Si se realiza después de curl y tríceps o hay fatiga, quedarse en las repeticiones compatibles con RPE ≤7; no subir carga.",
-          "restSeconds": 90,
+          "target": "12–15 · RPE 6–7 · En la misma máquina, probar el menor ajuste real por encima de 65 kg, limitado a +5 kg como máximo; no asumir que existen 67,5 o 70. Empezar en 12+12 a RPE 6–7. Si el salto mínimo supera 5 kg, no se puede montar o 12 supera RPE 7, repetir 65 kg dentro de 12–15. Hacer antes de curl/tríceps si está disponible, y registrar orden y peso real. No superar 15 repeticiones.",
+          "restSeconds": 120,
           "sets": [
             {
               "reps": "12–15",
-              "weight": "65",
+              "weight": "",
               "effort": "RPE 6–7"
             },
             {
               "reps": "12–15",
-              "weight": "65",
+              "weight": "",
               "effort": "RPE 6–7"
             }
           ],
@@ -421,24 +421,24 @@
         },
         {
           "name": "Curl en polea",
-          "target": "10–15 · RPE 6–7 · 24,5 kg en la misma polea; buscar 15+14 solo si ambas series mantienen RPE ≤7 y técnica. Si 14 ya alcanza RPE 7, repetir 14+14. No subir carga hasta completar 15+15 dentro del objetivo.",
+          "target": "10–15 · RPE 6–7 · En la misma polea y accesorio, probar el menor ajuste real por encima de 24,5 kg, con incremento máximo de 2,5 kg. Empezar en 10–12 por serie a RPE 6–7; si queda margen se avanza dentro de 10–15, sin forzar. Si el mínimo es mayor, no está disponible o 10 supera RPE 7, repetir 24,5 kg hasta 15+15. Registrar el peso real.",
           "restSeconds": 90,
           "sets": [
             {
               "reps": "10–15",
-              "weight": "24,5",
+              "weight": "",
               "effort": "RPE 6–7"
             },
             {
               "reps": "10–15",
-              "weight": "24,5",
+              "weight": "",
               "effort": "RPE 6–7"
             }
           ]
         },
         {
           "name": "Extensión de tríceps en polea",
-          "target": "10–15 · RPE 6–7 · 28 kg en la misma polea; buscar 14+14 con 2 min de descanso y subir a 15 solo si sigue dentro de RPE 6–7. Mantener carga; no gastar todo el margen en la primera serie.",
+          "target": "10–15 · RPE 6–7 · 28 kg en la misma polea; 14–15 por serie, hasta 15+15 mientras RPE ≤7. Mantener 120 s y no agotar margen en la primera. Registrar si la segunda es cómoda y cómo llega de energía; tras esta C, valorar el menor incremento si ambas series siguen limpias y quiere subir.",
           "restSeconds": 120,
           "sets": [
             {
@@ -460,12 +460,12 @@
       },
       "warmup": [
         {
-          "name": "Activación general suave y comprobación del día",
-          "target": "5 minutos suaves de caminar o bicicleta, sin fatigar. Descansar tras C y contar también boxeo y lucha. Comprobar energía, síntomas, molestias y respuesta al calentamiento antes de cada sesión. Si coinciden baja energía y calentamiento anormal, reducir a una serie efectiva por ejercicio y RPE 6–7, sin ensayar aumentos de carga. No comprimir A–B–C para recuperar días. Dolor o técnica alterada: detener ese ejercicio y evaluar."
+          "name": "Activación general y comprobación del día",
+          "target": "5 minutos de caminar o bicicleta suave, sin sprints ni fatiga. Descanso real tras C → A → descanso según respuesta → B → C, con descanso adicional si hace falta. Contar también boxeo y lucha; no comprimir sesiones para recuperar días. Antes de empezar comprobar energía, molestias y calentamiento. Si varias señales empeoran o el calentamiento resulta anormal, usar una sola serie efectiva por ejercicio a RPE 6–7, sin probar subidas. Dolor, inestabilidad persistente o coordinación alterada: detener el ejercicio y evaluar."
         },
         {
           "name": "Aproximación de Prensa inclinada",
-          "target": "Ligera ×8 · aproximadamente 75 kg ×4 · 100 kg ×2"
+          "target": "Ligera ×8 · unos 80 kg ×4 · unos 105 kg ×2; redondear al ajuste real"
         },
         {
           "name": "Aproximación de Press militar",
@@ -473,19 +473,19 @@
         },
         {
           "name": "Aproximación de Jalón neutro",
-          "target": "Ligera ×6 · intermedia ×3 con el mismo accesorio"
+          "target": "Ligera ×6 · ajuste medio ×3; comprobar accesorio"
         },
         {
           "name": "Aproximación de Peso muerto rumano",
-          "target": "30 kg ×6 · 45 kg ×3 · 55 kg ×1–2; comprobar agarre"
+          "target": "20 kg ×8 · 40 kg ×4 · 55 kg ×2; verificar agarre"
         },
         {
           "name": "Aproximación de Pec deck",
-          "target": "Ligera ×6–8"
+          "target": "Ligera ×6–8 · 65 kg ×3; comprobar siguiente ajuste"
         },
         {
           "name": "Aproximación de Curl en polea",
-          "target": "Ligera ×6–8"
+          "target": "Ligera ×6–8 · 24,5 kg ×3; comprobar siguiente ajuste"
         },
         {
           "name": "Aproximación de Extensión de tríceps en polea",
