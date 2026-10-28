@@ -9,6 +9,34 @@
   --warn: #f3bd61;
 }
 
+.mobility-home { border-color: #3b7668; }
+.mobility-recent { list-style: none; padding: 0; margin: 12px 0 0; }
+.mobility-recent li { display: flex; gap: 12px; justify-content: space-between; margin: 7px 0; color: var(--muted); font-size: .85rem; }
+.mobility-recent strong { color: var(--accent); }
+.mobility-dialog { max-height: calc(100dvh - 24px); overflow: auto; }
+.mobility-dialog > label { margin: 14px 0; }
+.mobility-dialog h3 { margin: 8px 0 12px; }
+.mobility-current { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.mobility-current p { margin: 8px 0; }
+.mobility-countdown { display: block; margin: 15px 0; font-variant-numeric: tabular-nums; font-size: clamp(2.8rem, 15vw, 4.3rem); line-height: 1; }
+.mobility-dialog .actions { flex-wrap: wrap; }
+.mobility-dialog .actions button { flex: 1; min-width: 130px; }
+.mobility-detail { margin: 16px 0; }
+.mobility-detail summary { cursor: pointer; color: var(--accent); padding: 8px 0; }
+.mobility-checklist { padding: 0; margin: 12px 0; list-style: none; }
+.mobility-checklist li { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.mobility-checklist li > span { min-width: 22px; text-align: center; }
+.mobility-checklist small { display: block; color: var(--muted); margin-top: 3px; }
+.mobility-checklist .complete { color: var(--accent); }
+.mobility-checklist .current > span { color: var(--accent); font-weight: 800; }
+.mobility-notice, .mobility-workout-tool p, .work-timer-tool p { font-size: .82rem; line-height: 1.5; }
+.work-timer-tool { display: grid; gap: 9px; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: end; border-block: 1px solid var(--line); padding: 12px 0; margin-bottom: 12px; }
+.work-timer-tool p { grid-column: 1 / -1; margin: 0; color: var(--muted); }
+.work-timer-bar { position: sticky; top: 6px; z-index: 6; padding: 14px; margin-bottom: 14px; border: 1px solid var(--accent); border-radius: 14px; background: #09251df5; }
+.work-timer-bar strong { display: block; font-size: 1.45rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+.work-timer-bar .actions { margin: 8px 0 0; }
+.work-timer-bar p { margin: 4px 0; }
+
 * { box-sizing: border-box; }
 
 body {

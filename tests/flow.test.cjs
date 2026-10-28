@@ -11,8 +11,9 @@ function app(stored={},initialStorage){
   const elements=new Map(),storage=initialStorage||new Map(),alerts=[],downloads=[];
   const element=id=>{if(!elements.has(id))elements.set(id,{id,value:'',textContent:'',hidden:false,innerHTML:'',disabled:false,dataset:{},classList:{toggle(){},add(){},remove(){}},addEventListener(){},showModal(){},close(){},before(){},append(){},setAttribute(){},click(){downloads.push(this)}});return elements.get(id);};
   if(!initialStorage)storage.set('mi-entrenamiento-v1',JSON.stringify({routines:[],sessions:[],consumedPrescriptionIds:[],...stored}));
-  const context=vm.createContext({TrainingFlow:Flow,structuredClone,Date,JSON,Intl,Map,Set,File,Blob,URL:{createObjectURL:()=> 'blob:test',revokeObjectURL(){}},crypto:require('node:crypto').webcrypto,navigator:{},console,
-    document:{querySelector:element,querySelectorAll:()=>[],addEventListener(){},createElement:()=>element('download-'+downloads.length)},window:{scrollTo(){},addEventListener(){}},
+  const mobilityUI={init(){},renderHome(){},workoutTools(){return '';},reset(){},open(){}};
+  const context=vm.createContext({MobilityUI:mobilityUI,TrainingFlow:Flow,structuredClone,Date,JSON,Intl,Map,Set,File,Blob,URL:{createObjectURL:()=> 'blob:test',revokeObjectURL(){}},crypto:require('node:crypto').webcrypto,navigator:{},console,
+    document:{querySelector:element,querySelectorAll:()=>[],addEventListener(){},createElement:()=>element('download-'+downloads.length)},window:{MobilityUI:mobilityUI,scrollTo(){},addEventListener(){}},
     localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},alert:x=>alerts.push(x),confirm:()=>true,
     fetch:async()=>{throw Error('offline')},setTimeout:()=>1,clearTimeout(){},setInterval:()=>1,clearInterval(){}});
   vm.runInContext(fs.readFileSync(path.join(__dirname,'../app.js'),'utf8'),context);

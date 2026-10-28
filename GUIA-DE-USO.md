@@ -12,6 +12,16 @@ Aplicación diaria para Android: <https://cursosjorgeiafinance-beep.github.io/mi
 - Al terminar C aparece **Compartir ciclo para analizar**. Durante el descanso, envía el archivo y pide preparar las siguientes A, B y C juntas. El siguiente ciclo se carga tras revisar y autorizar las tres fichas.
 - Actualizar el plan no sustituye una sesión en curso ni un ciclo incompleto, y volver a descargar un ciclo terminado no lo reinicia.
 
+## Movilidad guiada y tiempos de trabajo
+
+- En Inicio, **Movilidad de hoy** abre los bloques A (5 minutos), B y C (8 minutos). En una rutina preparada también aparece **Guiar movilidad** dentro de su ejercicio de movilidad. Es el bloque final ya incluido en la sesión.
+- La guía muestra el ejercicio, las repeticiones y una cuenta atrás. **Empezar tramo**, **Pausar** y **Siguiente tramo** controlan la práctica. Un aviso sonoro y vibración, cuando el dispositivo los permite, indican cuándo parar.
+- Los minutos de un ejercicio son tiempo para practicar las repeticiones con control y recuperar entre ellas. Las fijaciones de 2 segundos tienen un contador separado: no hay que mantener una postura durante uno o dos minutos.
+- Al terminar todos los tramos, **Guardar movilidad** registra la realización de hoy. Si lo abriste desde la sesión, confirma solo su fila de movilidad. La movilidad por sí sola no completa A, B o C ni desbloquea la sesión siguiente.
+- El progreso se recupera al volver a abrir. Cerrar la guía la pausa. Con la pantalla bloqueada, el navegador puede silenciar el aviso; al regresar solo termina el tramo que estaba en marcha, sin dar por hechos los siguientes. Se intenta mantener la pantalla encendida mientras el reloj está activo, si el dispositivo lo permite.
+- Los ejercicios con tiempo tienen además **Cronometrar trabajo**; las recepciones de saltos permiten contar los 2 segundos de fijación. Estos avisos no confirman series: anota el tiempo o las repeticiones realmente realizados.
+- La copia completa incluye la realización y el progreso de movilidad. Las copias antiguas siguen siendo compatibles. Al compartir un análisis se incluyen también los bloques registrados en esas fechas; no se envían automáticamente a ningún servicio.
+
 ## Compartir sin descargar el mes
 
 Al guardar una sesión, pulsa **Compartir sesión**: métricas y observaciones viajan juntas en un único archivo JSON. Puedes recuperarlo abriendo cualquier sesión del historial.

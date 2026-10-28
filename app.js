@@ -255,6 +255,7 @@ async function refreshNextPrescription({notify=false}={}){
   }
 }
 function renderHome(){
+  if(typeof MobilityUI!=='undefined')MobilityUI.renderHome();
   $('#todayLabel').textContent=dateText();
   renderNextPrescription();
   const root=$('#recentSessions'), recent=data.sessions.slice(0,3);
@@ -404,6 +405,7 @@ function updateRestTimer(){
   updateRestButtons(remaining);
 }
 function startRest(exerciseId,setIndex){
+  if(typeof MobilityUI!=='undefined'&&!MobilityUI.cancelWorkTimer())return;
   const exercise=workout?.exercises.find(item=>item.id===exerciseId);
   if(!exercise)return;
   const set=exercise.sets[setIndex];
@@ -510,9 +512,10 @@ function renderWorkout(){
     ${e.plannedName?`<p class="substitution-note">Alternativa a <strong>${esc(e.plannedName)}</strong></p>`:''}
     <div class="exercise-tools">
       <label>Cambiar ejercicio<select data-alternative="${e.id}" aria-label="Cambiar ${esc(e.name)}">${alternativeOptions(e)}</select></label>
-      <label>Descanso<select data-rest-duration="${e.id}" aria-label="Duración del descanso">${[60,90,120,180].map(seconds=>`<option value="${seconds}" ${restSecondsFor(e)===seconds?'selected':''}>${seconds<120?seconds+' s':seconds/60+' min'}</option>`).join('')}</select></label>
+      <label>Descanso<select data-rest-duration="${e.id}" aria-label="Duración del descanso">${[...new Set([15,30,45,60,75,90,120,150,180,240,restSecondsFor(e)])].sort((a,b)=>a-b).map(seconds=>`<option value="${seconds}" ${restSecondsFor(e)===seconds?'selected':''}>${seconds%60===0?seconds/60+' min':seconds+' s'}</option>`).join('')}</select></label>
     </div>
     <p class="exercise-meta">Objetivo: ${esc(e.target||'—')} · ${e.prescribed?'carga de la propuesta aprobada':'se han cargado los últimos valores si existen'}.</p>
+    ${typeof MobilityUI!=='undefined'?MobilityUI.workoutTools(e):''}
     ${e.sets.map((s,j)=>`<div class="set-row">
       <span class="set-number">${j+1}</span>
       <label>Reps<input data-field="reps" data-set="${j}" inputmode="decimal" value="${esc(s.reps)}" /></label>
@@ -591,6 +594,7 @@ function finalizeRecordedSet(set){
 function finish(){
   if(!workout)return;
   if(!workout.exercises.length)return alert('Añade al menos un ejercicio.');
+  if(TrainingFlow.slot(workout)&&workout.exercises.some(e=>/^Movilidad activa [ABC]\b/i.test(e.name))&&!workout.exercises.some(e=>!/^Movilidad activa [ABC]\b/i.test(e.name)&&e.sets.some(s=>s._touched&&(s.reps||s.weight||s.effort))))return alert('La movilidad ya queda registrada por separado. Registra también el trabajo realizado del resto de la sesión antes de finalizar A, B o C.');
   if(!workout.exercises.some(e=>e.sets.some(s=>s._touched&&(s.reps||s.weight||s.effort))))return alert('Registra al menos una serie realizada. Una sesión vacía no avanza el ciclo.');
   const ambiguous=ambiguousCompletedSets();
   if(ambiguous)return alert('Revisa '+ambiguous+' serie(s) confirmada(s): las repeticiones y el RPE realizados deben ser valores exactos, no rangos de la planificación.');
@@ -666,6 +670,7 @@ function sessionMetrics(s){
       name:e.name,
       ...(e.plannedName&&e.plannedName!==e.name?{plannedName:e.plannedName}:{}),
       target:e.target||'',
+      ...(e.mobility?{mobility:e.mobility}:{}),
       sets:e.sets.map(set=>({reps:set.reps||'',weight:set.weight||'',effort:set.effort||''}))
     }))
   };
@@ -699,6 +704,7 @@ async function shareAnalysis(scope,{downloadOnly=false}={}){
   const sessions=analysisSelection(scope);
   if(!sessions.length)return alert('Todavía no hay sesiones para compartir.');
   const payload=TrainingFlow.analysisPacket(sessions,scope,sessionMetrics);
+  payload.mobilitySessions=(data.mobilitySessions||[]).filter(entry=>entry.date>=payload.dateRange.from&&entry.date<=payload.dateRange.to);
   const name=`analisis_${scope==='cycle'?'ciclo':scope==='all'?'historial':'sesion'}_${payload.dateRange.to}_${String(sessions.at(-1).id).slice(0,8)}.json`;
   const content=JSON.stringify(payload,null,2);
   const status=message=>{$('#analysisStatus').textContent=message;$('#sessionShareStatus').textContent=message;};
@@ -855,8 +861,14 @@ $('#importInput').addEventListener('change',async e=>{
     nextPrescription=data.trainingPlan;
     try{localStorage.removeItem(PRESCRIPTION_KEY)}catch{}
     renderHome();renderRoutines();renderHistory();restoreDraft();
+    if(typeof MobilityUI!=='undefined')MobilityUI.reset();
     alert('Copia importada. Se han restaurado el historial y el progreso del plan incluido.');
   }catch{alert('No se pudo importar la copia. Comprueba el archivo y el espacio disponible.');}
   finally{e.target.value='';}
 });
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pendingInstall=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{pendingInstall.prompt();await pendingInstall.userChoice;pendingInstall=null;$('#installBtn').hidden=true};save();if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js');renderHome();restoreDraft();refreshNextPrescription();
+if(typeof MobilityUI!=='undefined')MobilityUI.init({
+  getData:()=>data,getWorkout:()=>workout,saveData:save,saveWorkoutDraft:saveDraft,refreshWorkout:renderWorkout,
+  currentSlot:()=>TrainingFlow.slot(workout)||TrainingFlow.slot(availablePrescription())||'A',dateKey:dateInput,uid,
+  warmAudio:warmRestAudio,cancelRest:()=>cancelRest(false),signal:()=>{navigator.vibrate?.([180,100,180]);soundRestEnd();}
+});
