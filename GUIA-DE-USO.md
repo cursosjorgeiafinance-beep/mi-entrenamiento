@@ -11,6 +11,7 @@ Aplicación diaria para Android: <https://cursosjorgeiafinance-beep.github.io/mi
 - Cerrar el móvil guarda un borrador. **Descartar sesión** mantiene el turno. Una sesión sin series realizadas no avanza.
 - Al terminar C aparece **Compartir ciclo para analizar**. Durante el descanso, envía el archivo y pide preparar las siguientes A, B y C juntas. El siguiente ciclo se carga tras revisar y autorizar las tres fichas.
 - Actualizar el plan no sustituye una sesión en curso ni un ciclo incompleto, y volver a descargar un ciclo terminado no lo reinicia.
+- A petición del propietario se retira el ciclo funcional de 29/10 al abrir la versión v17. Su plan y cualquier borrador asociado se guardan como copia recuperable dentro de la copia de seguridad; las sesiones finalizadas y la movilidad registrada se conservan. El ciclo de calistenia de 02/11 puede empezar por A. Si la app sigue mostrando el anterior, cerrarla y abrirla con conexión para recibir la actualización y pulsar **Actualizar plan**.
 
 ## Movilidad guiada y tiempos de trabajo
 

@@ -74,6 +74,69 @@ test('incomplete cycle cannot be overwritten; finished cycle can receive a fresh
   await a.run('refreshNextPrescription({notify:true})');
   assert.equal(a.run('nextPrescription.cycleId'),'cycle-2');
 });
+
+const retiredCycleId='ciclo-abc-funcional-2026-10-29-v1';
+const replacementCycleId='ciclo-abc-calistenia-boxeo-2026-11-02-v3';
+test('withdrawal preserves history and consumption, archives the pending draft and unlocks only the approved replacement',async()=>{
+  const old=cycle(retiredCycleId),saved={id:'saved-A',date:'2026-10-29',routineName:'Full body A',prescriptionId:old.sessions[0].prescriptionId,exercises:[]};
+  const first=app({trainingPlan:old,sessions:[saved],consumedPrescriptionIds:[saved.prescriptionId],mobilitySessions:[{id:'daily'}]});
+  assert.equal(first.run('nextPrescription'),null);
+  assert.equal(first.run('data.sessions[0].id'),'saved-A');
+  assert.equal(first.run('data.consumedPrescriptionIds.length'),1);
+  assert.equal(first.run('data.mobilitySessions[0].id'),'daily');
+  const archive=first.run('data.retiredTrainingPlans[0]');
+  assert.equal(archive.plan.cycleId,retiredCycleId);
+  assert.match(Flow.replacementError(null,cycle('unrelated'),first.run('data'),false),/falta completar B/);
+  first.context.fetch=async()=>({ok:true,json:async()=>cycle(replacementCycleId)});
+  await first.run('refreshNextPrescription({notify:true})');
+  assert.equal(first.run('nextPrescription.cycleId'),replacementCycleId);
+  assert.equal(first.run('TrainingFlow.slot(availablePrescription())'),'A');
+});
+
+test('withdrawal saves a recoverable draft and linked timers before removing the old active session',()=>{
+  const a=app({trainingPlan:cycle('ordinary-cycle')});
+  a.run('startPreparedSession();workout.cycleId=RETIRED_CYCLE.cycleId;workout.exercises[0].sets[0]._touched=true;data.workTimer={workoutId:workout.id,status:"paused"};data.mobilityDraft={workoutId:workout.id};save();saveDraft()');
+  const draft=JSON.parse(a.storage.get('mi-entrenamiento-sesion-en-curso-v1'));
+  const b=app({},a.storage);
+  assert.equal(b.run('workout'),null);
+  assert.equal(b.storage.has('mi-entrenamiento-sesion-en-curso-v1'),false);
+  assert.equal(b.run('data.trainingPlan.cycleId'),'ordinary-cycle');
+  assert.equal(b.run('data.retiredTrainingPlans[0].activeDraft.workout.id'),draft.workout.id);
+  assert.equal(b.run('data.retiredTrainingPlans[0].activeDraft.workout.exercises[0].sets[0]._touched'),true);
+  assert.equal(b.run('data.workTimer'),null);
+  assert.equal(b.run('data.retiredTrainingPlans[0].workTimer.status'),'paused');
+  assert.equal(b.run('data.mobilityDraft'),null);
+  assert.equal(b.run('backupPayload().retiredTrainingPlans.length'),1);
+  const c=app({},b.storage);
+  assert.equal(c.run('data.retiredTrainingPlans.length'),1);
+});
+
+test('failed withdrawal storage keeps the plan and draft intact',()=>{
+  const a=app({trainingPlan:cycle('ordinary-cycle')});
+  a.run('startPreparedSession();workout.cycleId=RETIRED_CYCLE.cycleId;saveDraft();data.trainingPlan={...nextPrescription,cycleId:RETIRED_CYCLE.cycleId};save()');
+  const original=a.storage.get('mi-entrenamiento-v1'),draft=a.storage.get('mi-entrenamiento-sesion-en-curso-v1');
+  const result=a.run('localStorage.setItem=()=>{throw Error("full")};retirePreviousCycle()');
+  assert.equal(result,false);
+  assert.equal(a.storage.get('mi-entrenamiento-v1'),original);
+  assert.equal(a.storage.get('mi-entrenamiento-sesion-en-curso-v1'),draft);
+  assert.equal(a.run('data.retiredTrainingPlans'),undefined);
+});
+
+test('legacy cache is retired without removing a different active draft or re-downloading the withdrawn plan',async()=>{
+  const a=app({trainingPlan:cycle('other-active-cycle')});
+  a.run('startPreparedSession();saveDraft()');
+  a.storage.set('mi-entrenamiento-proxima-sesion-v1',JSON.stringify(cycle(retiredCycleId)));
+  const draft=a.storage.get('mi-entrenamiento-sesion-en-curso-v1');
+  const b=app({},a.storage);
+  assert.equal(b.run('nextPrescription.cycleId'),'other-active-cycle');
+  assert.equal(b.storage.get('mi-entrenamiento-sesion-en-curso-v1'),draft);
+  assert.equal(b.storage.has('mi-entrenamiento-proxima-sesion-v1'),false);
+  b.run('workout=null;data.trainingPlan=null;nextPrescription=null');
+  b.context.fetch=async()=>({ok:true,json:async()=>cycle(retiredCycleId)});
+  await b.run('refreshNextPrescription({notify:true})');
+  assert.equal(b.run('nextPrescription'),null);
+  assert.match(b.alerts.at(-1),/ya fue retirado/);
+});
 test('backup includes cycle, progress and draft; legacy history also determines the next slot',()=>{
   const a=app({trainingPlan:cycle()});
   a.run('startPreparedSession();workout.exercises[0].sets[0]._touched=true;finish();startPreparedSession()');

@@ -57,9 +57,31 @@
       return 'Se conserva el ciclo pendiente. Termina A, B y C antes de cargar otro plan.';
     if(candidate?.kind==='training-cycle'&&identity(current)!==identity(candidate)){
       if(candidate.sessions.some(s=>consumed(data,s.prescriptionId)))return 'El ciclo recibido reutiliza sesiones ya realizadas. Necesita tres propuestas nuevas.';
-      if(expectedSlot(null,data)!=='A')return `Antes del nuevo ciclo falta completar ${expectedSlot(null,data)} y las sesiones siguientes del ciclo actual.`;
+      const replacesRetired=(data.retiredTrainingPlans||[]).some(entry=>entry.replacementCycleId===candidate.cycleId);
+      if(!replacesRetired&&expectedSlot(null,data)!=='A')return `Antes del nuevo ciclo falta completar ${expectedSlot(null,data)} y las sesiones siguientes del ciclo actual.`;
     }
     return '';
+  }
+  function retireCycle(data,cached,draft,directive,retiredAt=new Date().toISOString()){
+    const matches=plan=>plan?.kind==='training-cycle'&&plan.cycleId===directive.cycleId;
+    const plan=matches(data.trainingPlan)?data.trainingPlan:matches(cached)?cached:null;
+    const matchingDraft=draft?.workout&&(draft.workout.cycleId===directive.cycleId
+      ||directive.prescriptionIds.includes(draft.workout.prescriptionId))?draft:null;
+    if(!plan&&!matchingDraft)return null;
+    const next=structuredClone(data),archives=next.retiredTrainingPlans||[];
+    let entry=archives.find(entry=>entry.cycleId===directive.cycleId
+      &&entry.activeDraft?.workout?.id===matchingDraft?.workout?.id&&Boolean(entry.plan)===Boolean(plan));
+    if(!entry){entry={cycleId:directive.cycleId,replacementCycleId:directive.replacementCycleId,
+      retiredAt,...(plan?{plan:structuredClone(plan)}:{}),...(matchingDraft?{activeDraft:structuredClone(matchingDraft)}:{})};archives.push(entry);}
+    next.retiredTrainingPlans=archives;
+    if(matches(next.trainingPlan))next.trainingPlan=null;
+    if(matchingDraft){
+      const id=matchingDraft.workout.id;
+      for(const key of ['workTimer','mobilityDraft']){
+        if(next[key]?.workoutId===id){entry[key]=structuredClone(next[key]);next[key]=null;}
+      }
+    }
+    return {data:next,removeCached:matches(cached),removeDraft:Boolean(matchingDraft)};
   }
   function latestCycle(sessions){
     const ordered=chronological(sessions),last=ordered.filter(s=>slot(s)).at(-1);
@@ -80,7 +102,7 @@
       sessions:ordered.map(s=>({...toMetrics(s),issues:s.issues||'',comments:s.comments||''}))
     };
   }
-  const api={ORDER,slot,validCycle,consumed,pending,chronological,expectedSlot,startError,replacementError,latestCycle,analysisPacket};
+  const api={ORDER,slot,validCycle,consumed,pending,chronological,expectedSlot,startError,replacementError,retireCycle,latestCycle,analysisPacket};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   else root.TrainingFlow=api;
 })(globalThis);

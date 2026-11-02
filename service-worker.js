@@ -1,4 +1,4 @@
-const CACHE="entreno-v16-movilidad";
+const CACHE="entreno-v17-retirar-ciclo";
 const FILES=["./index.html","./styles.css","./training-flow.js","./mobility-flow.js","./mobility-ui.js","./app.js","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{

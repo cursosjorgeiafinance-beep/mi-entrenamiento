@@ -2,6 +2,9 @@ const KEY="mi-entrenamiento-v1";
 const DRAFT_KEY="mi-entrenamiento-sesion-en-curso-v1";
 const PRESCRIPTION_KEY="mi-entrenamiento-proxima-sesion-v1";
 const PRESCRIPTION_URL="./proxima-sesion.json";
+// Explicit withdrawal requested by the owner; only this superseded cycle is retired.
+const RETIRED_CYCLE={cycleId:'ciclo-abc-funcional-2026-10-29-v1',replacementCycleId:'ciclo-abc-calistenia-boxeo-2026-11-02-v3',
+  prescriptionIds:['full-body-a-funcional-2026-10-29-v1','full-body-b-funcional-2026-10-30-v1','full-body-c-funcional-2026-10-31-v1']};
 const EXPORT_SCHEMA_VERSION=1;
 const DEFAULT_ROUTINES=[
   {id:"full-body-a",name:"Full body A",description:"Básicos controlados · RPE 7 · 2–3 repeticiones en reserva",exercises:[
@@ -128,13 +131,32 @@ function validPrescription(value){
 function loadCachedPrescription(){
   try{
     const cached=data.trainingPlan||JSON.parse(localStorage.getItem(PRESCRIPTION_KEY)||"null");
+    if(cached?.kind==='training-cycle'&&(data.retiredTrainingPlans||[]).some(entry=>entry.cycleId===cached.cycleId))return null;
     return validPlan(cached)?cached:null;
   }catch{
     return null;
   }
 }
 function validPlan(value){return validPrescription(value)||TrainingFlow.validCycle(value,validPrescription)}
+function retirePreviousCycle(){
+  try{
+    const cached=JSON.parse(localStorage.getItem(PRESCRIPTION_KEY)||'null');
+    const draft=JSON.parse(localStorage.getItem(DRAFT_KEY)||'null');
+    const result=TrainingFlow.retireCycle(data,cached,draft,RETIRED_CYCLE);
+    if(!result)return false;
+    // Save the recoverable copy before removing any active pointer or draft.
+    localStorage.setItem(KEY,JSON.stringify(result.data));
+    data=result.data;
+    if(result.removeCached)try{localStorage.removeItem(PRESCRIPTION_KEY)}catch{}
+    if(result.removeDraft)try{localStorage.removeItem(DRAFT_KEY)}catch{}
+    return true;
+  }catch{
+    alert('No se pudo retirar el ciclo anterior de forma recuperable. Se conserva; comprueba el espacio del dispositivo.');
+    return false;
+  }
+}
 let data=loadData(), workout=null, interval=null, elapsed=0, pendingInstall=null, lastFinished=null;
+retirePreviousCycle();
 let nextPrescription=loadCachedPrescription();
 let restTimer=null, restInterval=null, restDoneTimeout=null, audioContext=null;
 const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
@@ -234,6 +256,10 @@ async function refreshNextPrescription({notify=false}={}){
     const empty=candidate?.kind==='training-next-session'&&candidate?.status==='empty';
     if(!empty&&!validPlan(candidate))throw Error('El plan recibido no tiene un formato válido.');
     const incoming=empty?null:candidate;
+    if(incoming?.kind==='training-cycle'&&(data.retiredTrainingPlans||[]).some(entry=>entry.cycleId===incoming.cycleId)){
+      if(notify)alert('Ese ciclo ya fue retirado. Vuelve a actualizar para descargar el plan vigente.');
+      return;
+    }
     const blocked=TrainingFlow.replacementError(nextPrescription,incoming,data,Boolean(workout));
     if(blocked){if(notify)alert(blocked);return;}
     const previous=data.trainingPlan;
@@ -543,6 +569,7 @@ function restoreDraft(){
   try{
     const draft=JSON.parse(localStorage.getItem(DRAFT_KEY)||'null');
     if(!draft?.workout?.exercises?.length)return false;
+    if((data.retiredTrainingPlans||[]).some(entry=>entry.activeDraft?.workout?.id===draft.workout.id))return false;
     if(data.sessions.some(s=>s.id===draft.workout.id)){localStorage.removeItem(DRAFT_KEY);return false;}
     workout=draft.workout;
     restTimer=draft.restTimer||null;
@@ -858,7 +885,8 @@ $('#importInput').addEventListener('change',async e=>{
       if(previousDraft)localStorage.setItem(DRAFT_KEY,previousDraft);else localStorage.removeItem(DRAFT_KEY);
       throw error;
     }
-    nextPrescription=data.trainingPlan;
+    retirePreviousCycle();
+    nextPrescription=loadCachedPrescription();
     try{localStorage.removeItem(PRESCRIPTION_KEY)}catch{}
     renderHome();renderRoutines();renderHistory();restoreDraft();
     if(typeof MobilityUI!=='undefined')MobilityUI.reset();
