@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "training-cycle",
   "status": "approved",
-  "cycleId": "ciclo-abc-calistenia-boxeo-2026-11-02-v3",
+  "cycleId": "ciclo-abc-calistenia-boxeo-2026-11-09-v1",
   "sequence": [
     "A",
     "B",
@@ -13,21 +13,26 @@
       "schemaVersion": 1,
       "kind": "training-next-session",
       "status": "approved",
-      "prescriptionId": "calistenia-a-parque-boxeo-2026-11-02-v3",
-      "approvedAt": "2026-11-02T19:25:15.016895Z",
+      "prescriptionId": "calistenia-a-parque-boxeo-2026-11-09-v1",
+      "approvedAt": "2026-11-09T21:41:16.977539Z",
       "sessionType": "adapted",
-      "routineId": "sesion-calistenia-parque-a-2026-11-02-v3",
-      "routineName": "Calistenia A · fuerza y salto breve",
+      "routineId": "sesion-calistenia-parque-a-2026-11-09-v1",
+      "routineName": "Calistenia A · fuerza y saltos de calidad",
       "sourceProposal": {
-        "proposalId": "calistenia-a-parque-boxeo-2026-11-02-v3",
-        "createdAt": "2026-11-02T19:22:15.047963Z"
+        "proposalId": "calistenia-a-parque-boxeo-2026-11-09-v1",
+        "createdAt": "2026-11-09T21:25:03.531888Z"
       },
       "exercises": [
         {
           "name": "Salto vertical con aterrizaje estable",
-          "target": "Sin chaleco. Salto de altura cómoda; caer sobre ambos pies, amortiguar y quedarse estable 2 s, sin rebote ni bloquear rodillas. Recolocarse unos 10 s antes del siguiente salto. Si cae altura o control, terminar. Alternativa sin vuelo: extensión rápida de piernas y elevación de talones 2×3.",
+          "target": "Haz 3 saltos por serie con intención rápida y reinicio de unos 10 s entre saltos. Aterriza estable sobre ambos pies y fija 2 s. Descansa 90 s entre series. Si baja claramente la altura o pierdes estabilidad, acaba la serie y limita el bloque a 2×3. Si el suelo no permite aterrizar bien, usa extensión rápida de piernas con elevación de talón sin despegar 3×3.",
           "restSeconds": 90,
           "sets": [
+            {
+              "reps": "3",
+              "weight": "0",
+              "effort": "Calidad y velocidad; sin fatiga"
+            },
             {
               "reps": "3",
               "weight": "0",
@@ -42,54 +47,54 @@
         },
         {
           "name": "Dominadas pronas o neutras",
-          "target": "Sin lastre en esta primera exposición. Agarre cómodo, sin balanceo y sin apurar la última repetición. Si cuatro exceden RPE 7, usar apoyo seguro de pies o sustituir por remo invertido 2×6–8 a RPE 6. Registrar la variante; no improvisar soportes.",
+          "target": "Busca 6+6 con el agarre y recorrido que controlaste. Quédate en 5 en una serie si la sexta exigiría balanceo o superar RPE 7. Usa asistencia estable si lo necesitas.",
           "restSeconds": 120,
           "sets": [
             {
-              "reps": "4–6",
+              "reps": "5–6",
               "weight": "0",
-              "effort": "RPE 6–7"
+              "effort": "RPE 7"
             },
             {
-              "reps": "4–6",
+              "reps": "5–6",
               "weight": "0",
-              "effort": "RPE 6–7"
+              "effort": "RPE 7"
             }
           ],
           "plannedName": "Dominadas pronas"
         },
         {
           "name": "Split squat con apoyo de mano",
-          "target": "Ambos pies en el suelo, mano en barra para equilibrio, bajar y subir sin rebote. Seleccionar chaleco entre 0 y 6 kg añadidos, empezando sin carga; añadir de 1 en 1 kg en pruebas de 2–3 repeticiones solo si resulta claramente fácil. Máximo tres pruebas; no buscar el fallo. Registrar los kg realmente usados antes de comenzar. Si 0 kg supera RPE 7, acortar recorrido o aumentar apoyo. Cambiar pierna en 15–20 s; descansar 90 s tras ambas.",
+          "target": "Usa 10 kg totales de chaleco, mismo apoyo y recorrido. Descansa 90 s tras las dos piernas. Si supera RPE 7 o pierdes equilibrio, baja 1–2 kg.",
           "restSeconds": 90,
           "sets": [
             {
-              "reps": "6–8 por pierna",
-              "weight": "",
-              "effort": "RPE 6–7"
+              "reps": "8 por pierna",
+              "weight": "10",
+              "effort": "RPE 7"
             },
             {
-              "reps": "6–8 por pierna",
-              "weight": "",
-              "effort": "RPE 6–7"
+              "reps": "8 por pierna",
+              "weight": "10",
+              "effort": "RPE 7"
             }
           ],
           "plannedName": "Sentadilla búlgara"
         },
         {
           "name": "Fondos en paralelas",
-          "target": "Sin chaleco. Paralelas firmes y adecuadas para fondos; sostener el cuerpo, bajar con control en un recorrido cómodo y empujar sin rebote, balanceo ni encoger el cuello. No buscar profundidad máxima. Terminar dejando unas 3–4 repeticiones posibles. Si cinco ya exceden RPE 7, usar ayuda de los pies solo cuando las barras permitan apoyarlos con seguridad y registrar esa asistencia. Si no hay variante cómoda y estable, sustituir esa estación por flexiones con apoyo ajustado 2×6–10 a RPE 6, descanso 120 s; no hacer ambos ejercicios. Parar ante dolor o síntomas en hombro/codo.",
+          "target": "Repite fondos con el recorrido controlado. Apunta a 8 por serie si mantienes RPE 7. Si el apoyo o el rango fallan, usa pies asistiendo en paralelas firmes o sustituye por flexión con apoyo ajustado 2×6–10 a RPE 6.",
           "restSeconds": 120,
           "sets": [
             {
-              "reps": "5–8",
+              "reps": "6–8",
               "weight": "0",
-              "effort": "RPE 6–7"
+              "effort": "RPE 7"
             },
             {
-              "reps": "5–8",
+              "reps": "6–8",
               "weight": "0",
-              "effort": "RPE 6–7"
+              "effort": "RPE 7"
             }
           ]
         },
@@ -147,7 +152,7 @@
         },
         {
           "name": "Sentadilla lateral asistida · movilidad A",
-          "target": "Sujetarse a barra fija, desplazar pelvis a un lado con rango cómodo, 4–5 repeticiones y pausa de 2 s; después cambiar. Una ventana de 60 s por lado; sin forzar profundidad. Cronometrar cada ventana, parar al aviso y marcar solo al completar. El descanso de 15 s sirve para cambiar de lado o posición; no añadirlo tras la última ventana.",
+          "target": "Sujetarse a barra fija, desplazar pelvis a un lado con rango cómodo, 4–5 repeticiones y pausa de 2 s; después cambiar. Una ventana de 60 s por lado; sin forzar profundidad. Cronometrar cada ventana, parar al aviso y marcar solo al completar. El descanso de 15 s sirve para cambiar de lado o posición; no añadirlo tras la última ventana. Registra por separado los 60 s realizados a cada lado.",
           "restSeconds": 15,
           "sets": [
             {
@@ -203,11 +208,11 @@
         },
         {
           "name": "Esfuerzo y ajuste al boxeo",
-          "target": "A/B fuerza RPE 6–7; C aproximadamente 6 con menos series. Dejar unas 3–4 repeticiones posibles, sin fallo. En saltos/empuje rápido manda la calidad. Antes de sparring especialmente duro, o con fatiga clara ya en el calentamiento, hacer una serie por ejercicio de fuerza, omitir potencia/rueda y conservar solo movilidad cómoda; puede durar menos de 45 min. Si persiste la fatiga o cae claramente el rendimiento en boxeo en dos exposiciones, intercalar descanso completo y revisar dosis. Dolor, hormigueo o pérdida de control: parar el ejercicio, no progresar. A y C incorporan un empuje nuevo: si la técnica, el apoyo o el rango no se controlan, no forzar el mínimo de repeticiones; aplicar la alternativa de esa estación."
+          "target": "Fuerza A y B a RPE 6–7. C mantiene una serie por ejercicio de fuerza y RPE alrededor de 6. En los saltos y flexiones rápidas, corta la serie si cae claramente la velocidad o el control. Si el boxeo pierde frescura al probar la subida, vuelve a la dosis previa de zancada y bisagra. Ante sparring especialmente duro, usa el extremo bajo del rango."
         },
         {
           "name": "Carga y progresión",
-          "target": "Primera exposición: dominadas, remos, empujes y saltos sin lastre. Split squat y bisagra permiten seleccionar 0–6 kg de chaleco en aproximaciones; registrar carga exacta. No confundir seleccionar una carga inicial con una progresión acreditada. Después, mismo montaje y recorrido; aumentar primero repeticiones. Tras dos exposiciones comparables al techo y dentro de RPE, proponer +1 kg en un movimiento o una pequeña modificación de palanca, no ambas cosas. C mantiene menos volumen y RPE ≤7; saltos sin chaleco. No añadir ejercicios domésticos al final por disponer de material."
+          "target": "Repite el apoyo y recorrido de cada patrón y registra los kg añadidos. En A, split squat con 10 kg de chaleco. En B, zancada sin lastre y bisagra con ensayo de 7 kg, regresando a 6 kg si supera RPE 7. Aumentar una sola variable por ejercicio y usar el menor salto del chaleco."
         },
         {
           "name": "Calentamiento general · 8 min",
@@ -215,11 +220,11 @@
         },
         {
           "name": "Aproximaciones específicas",
-          "target": "Salto vertical con aterrizaje estable: 2 ensayos bajos tras el calentamiento. | Dominadas pronas o neutras: 3 tracciones con pies apoyados si hay soporte seguro y 1–2 dominadas fáciles; descansar 90 s antes de la primera serie. | Split squat con apoyo de mano: 3 repeticiones por pierna sin carga; 2 por lado con el lastre elegido si cambia. | Fondos en paralelas: 5 s de apoyo estable sin fatiga y 2–3 fondos muy fáciles, con pies asistiendo si el montaje lo permite; después 1–2 del recorrido elegido y 90 s de pausa. Si no se puede aproximar con control, usar la sustitución. | Bird dog en cuadrupedia: 2 repeticiones por lado con recorrido corto."
+          "target": "Salto vertical con aterrizaje estable: 2 saltos bajos de prueba, con la misma recepción. | Dominadas pronas o neutras: 3 tracciones fáciles con apoyo de pies si es viable, luego 1–2 dominadas fáciles. | Split squat con apoyo de mano: 3 por pierna sin peso, 2 por pierna con 6 kg y 1–2 con 10 kg si necesitas comprobar el apoyo. | Fondos en paralelas: 5 s de apoyo y 2–3 fondos fáciles. Prueba 1–2 en el recorrido de trabajo antes de la primera serie. | Bird dog en cuadrupedia: 2 repeticiones por lado con recorrido corto."
         },
         {
           "name": "Tiempo y descansos",
-          "target": "Calentamiento: 8 min; Saltos y pausas: 4 min; Fuerza, tronco y aproximaciones: 22 min; Movilidad: 8 min; Paseo: 3 min; Transiciones: 3 min. Descansos de la ficha entre series; en unilateral después de ambos lados. Si falta tiempo, reducir el paseo/accesorio, sin recortar la recuperación de potencia ni añadir prisa. Se puede alternar dominada/remo con piernas dejando al menos 2 min entre series del mismo ejercicio; no es un circuito sin pausas."
+          "target": "Calentamiento: 8 min; Saltos y pausas: 5 min; Fuerza, tronco y aproximaciones: 22 min; Movilidad: 8 min; Paseo: 3 min; Transiciones: 3 min. Los descansos se aplican entre series y después de ambos lados en los unilaterales. En movilidad usa los 15 s para cambiar de lado o posición entre ventanas. Si pasas de 50 min, registra qué alargó la sesión para ajustar el orden y los tiempos."
         },
         {
           "name": "Alternativa en casa",
@@ -235,51 +240,51 @@
       "schemaVersion": 1,
       "kind": "training-next-session",
       "status": "approved",
-      "prescriptionId": "calistenia-b-parque-boxeo-2026-11-02-v3",
-      "approvedAt": "2026-11-02T19:25:15.017633Z",
+      "prescriptionId": "calistenia-b-parque-boxeo-2026-11-09-v1",
+      "approvedAt": "2026-11-09T21:41:16.978293Z",
       "sessionType": "adapted",
-      "routineId": "sesion-calistenia-parque-b-2026-11-02-v3",
+      "routineId": "sesion-calistenia-parque-b-2026-11-09-v1",
       "routineName": "Calistenia B · tracción, cadera y empuje rápido",
       "sourceProposal": {
-        "proposalId": "calistenia-b-parque-boxeo-2026-11-02-v3",
-        "createdAt": "2026-11-02T19:22:15.047963Z"
+        "proposalId": "calistenia-b-parque-boxeo-2026-11-09-v1",
+        "createdAt": "2026-11-09T21:25:03.531888Z"
       },
       "exercises": [
         {
           "name": "Flexiones de subida rápida con manos elevadas",
-          "target": "Manos en barra fija o apoyo alto estable; bajar con control y subir rápido, sin despegar las manos ni dar palmada. Elegir una altura que permita las tres repeticiones claramente rápidas y con amplio margen, independientemente del ejercicio de A. Recolocarse unos 5 s entre repeticiones. Si se ralentiza o molesta, terminar. Sustituye al empuje normal de B; no añadir otras series de flexiones.",
+          "target": "Usa el mismo apoyo elevado firme. Baja con control, estabiliza y empuja con intención rápida manteniendo manos apoyadas y tronco en bloque. Recoloca unos 5 s entre repeticiones. Acaba la serie al primer descenso claro de velocidad o si se hunde la cadera. Descansa 75 s antes de repetir.",
           "restSeconds": 75,
           "sets": [
             {
               "reps": "3",
               "weight": "0",
-              "effort": "RPE 5–6; máxima intención de velocidad"
+              "effort": "RPE 5–6; subida rápida"
             },
             {
               "reps": "3",
               "weight": "0",
-              "effort": "RPE 5–6; máxima intención de velocidad"
+              "effort": "RPE 5–6; subida rápida"
             },
             {
               "reps": "3",
               "weight": "0",
-              "effort": "RPE 5–6; máxima intención de velocidad"
+              "effort": "RPE 5–6; subida rápida"
             }
           ],
           "plannedName": "Flexiones con pies elevados"
         },
         {
           "name": "Remo invertido con inclinación ajustada",
-          "target": "En barra baja fija, marcar dónde se colocan los pies; ajustar inclinación para dejar margen. Tirar hacia el pecho sin encoger cuello ni girar tronco. Sin chaleco en la primera exposición. Si el agarre resbala, secar manos y barra; no seguir con apoyo inseguro.",
+          "target": "Repite la posición de pies y agarre que te permitió estabilizar la segunda serie. Acerca el pecho, con codos en un ángulo cómodo y hombros lejos de las orejas. Registra apoyo y posición de los pies. Si las paralelas te obligan a retorcer el agarre, usa barra fija o remo unilateral con mancuerna según la alternativa de casa.",
           "restSeconds": 120,
           "sets": [
             {
-              "reps": "6–10",
+              "reps": "8–10",
               "weight": "0",
               "effort": "RPE 6–7"
             },
             {
-              "reps": "6–10",
+              "reps": "8–10",
               "weight": "0",
               "effort": "RPE 6–7"
             }
@@ -288,35 +293,35 @@
         },
         {
           "name": "Zancada atrás con apoyo opcional",
-          "target": "Paso atrás controlado, regresar sin rebote. Sin chaleco en la primera exposición; usar apoyo de mano. Cambiar lado en 15–20 s y descansar tras ambos. Si resulta muy fácil, registrarlo para graduar carga en la segunda exposición; no añadir muchas repeticiones.",
+          "target": "Haz 8 por pierna con el mismo paso y apoyo. Si la octava compromete la estabilidad o supera RPE 7, termina con 6–7. Descansa 90 s tras ambas piernas.",
           "restSeconds": 90,
           "sets": [
             {
-              "reps": "6 por pierna",
+              "reps": "8 por pierna",
               "weight": "0",
-              "effort": "RPE 6"
+              "effort": "RPE 6–7"
             },
             {
-              "reps": "6 por pierna",
+              "reps": "8 por pierna",
               "weight": "0",
-              "effort": "RPE 6"
+              "effort": "RPE 6–7"
             }
           ],
           "plannedName": "Pistol squat asistida o step-up"
         },
         {
           "name": "Bisagra de cadera con apoyo escalonado",
-          "target": "Un pie delante soporta la mayor parte del peso; el otro queda ligeramente detrás, con punta apoyada. Rodillas algo flexionadas, cadera atrás y espalda neutra. No levantar la pierna trasera. Seleccionar chaleco 0–6 kg con el mismo procedimiento acotado de A. Si el máximo es fácil, mantener técnica y registrar; no forzar rango para buscar esfuerzo. Cambiar lado y descansar tras ambos.",
+          "target": "Prueba 7 kg totales de chaleco. Empieza con 8 por lado y conserva el apoyo escalonado y el recorrido cómodo. Si la postura cambia o pasas de RPE 7, vuelve a 6 kg. Descansa 90 s tras ambos lados.",
           "restSeconds": 90,
           "sets": [
             {
-              "reps": "8 por lado",
-              "weight": "",
+              "reps": "8–10 por lado",
+              "weight": "7",
               "effort": "RPE 6–7"
             },
             {
-              "reps": "8 por lado",
-              "weight": "",
+              "reps": "8–10 por lado",
+              "weight": "7",
               "effort": "RPE 6–7"
             }
           ],
@@ -324,7 +329,7 @@
         },
         {
           "name": "Rueda abdominal desde rodillas",
-          "target": "Sin chaleco. Extender solo hasta donde pueda volver sin hundir la zona lumbar ni forzar hombros/codos. Rodillas en superficie cómoda; rueda sobre suelo firme y uniforme. Llevarla al parque o hacer este bloque en casa dentro de la misma sesión, sin duplicarlo. Si no está disponible, bird dog 2×6 por lado con pausa de 2 s y descanso 60 s.",
+          "target": "Busca 8 con el recorrido de la última sesión. Empieza desde rodillas, con costillas controladas. Termina donde aún puedas volver sin hundir la zona lumbar. Si no hay superficie firme, haz bird dog 2×6 por lado con pausa de 2 s.",
           "restSeconds": 90,
           "sets": [
             {
@@ -420,11 +425,11 @@
         },
         {
           "name": "Esfuerzo y ajuste al boxeo",
-          "target": "A/B fuerza RPE 6–7; C aproximadamente 6 con menos series. Dejar unas 3–4 repeticiones posibles, sin fallo. En saltos/empuje rápido manda la calidad. Antes de sparring especialmente duro, o con fatiga clara ya en el calentamiento, hacer una serie por ejercicio de fuerza, omitir potencia/rueda y conservar solo movilidad cómoda; puede durar menos de 45 min. Si persiste la fatiga o cae claramente el rendimiento en boxeo en dos exposiciones, intercalar descanso completo y revisar dosis. Dolor, hormigueo o pérdida de control: parar el ejercicio, no progresar. A y C incorporan un empuje nuevo: si la técnica, el apoyo o el rango no se controlan, no forzar el mínimo de repeticiones; aplicar la alternativa de esa estación."
+          "target": "Fuerza A y B a RPE 6–7. C mantiene una serie por ejercicio de fuerza y RPE alrededor de 6. En los saltos y flexiones rápidas, corta la serie si cae claramente la velocidad o el control. Si el boxeo pierde frescura al probar la subida, vuelve a la dosis previa de zancada y bisagra. Ante sparring especialmente duro, usa el extremo bajo del rango."
         },
         {
           "name": "Carga y progresión",
-          "target": "Primera exposición: dominadas, remos, empujes y saltos sin lastre. Split squat y bisagra permiten seleccionar 0–6 kg de chaleco en aproximaciones; registrar carga exacta. No confundir seleccionar una carga inicial con una progresión acreditada. Después, mismo montaje y recorrido; aumentar primero repeticiones. Tras dos exposiciones comparables al techo y dentro de RPE, proponer +1 kg en un movimiento o una pequeña modificación de palanca, no ambas cosas. C mantiene menos volumen y RPE ≤7; saltos sin chaleco. No añadir ejercicios domésticos al final por disponer de material."
+          "target": "Repite el apoyo y recorrido de cada patrón y registra los kg añadidos. En A, split squat con 10 kg de chaleco. En B, zancada sin lastre y bisagra con ensayo de 7 kg, regresando a 6 kg si supera RPE 7. Aumentar una sola variable por ejercicio y usar el menor salto del chaleco."
         },
         {
           "name": "Calentamiento general · 8 min",
@@ -432,11 +437,11 @@
         },
         {
           "name": "Aproximaciones específicas",
-          "target": "Flexiones de subida rápida con manos elevadas: 3 flexiones lentas fáciles y 2 rápidas de prueba. | Remo invertido con inclinación ajustada: 4 repeticiones con ángulo fácil y 2 en el elegido. | Zancada atrás con apoyo opcional: 3 repeticiones por lado. | Bisagra de cadera con apoyo escalonado: 4 bisagras bilaterales y 3 por lado sin carga; 2 con carga si cambia. | Rueda abdominal desde rodillas: 3 repeticiones de recorrido corto y 1–2 del recorrido elegido."
+          "target": "Flexiones de subida rápida con manos elevadas: 3 flexiones suaves y 2 repeticiones rápidas de prueba. | Remo invertido con inclinación ajustada: 4 repeticiones con ángulo fácil y 2 con la posición elegida. | Zancada atrás con apoyo opcional: 3 por pierna sin peso, con el apoyo previsto. | Bisagra de cadera con apoyo escalonado: 4 bisagras bilaterales sin carga, 3 por lado con 6 kg y 1–2 por lado con 7 kg. | Rueda abdominal desde rodillas: 3 repeticiones cortas y 1–2 en el recorrido elegido."
         },
         {
           "name": "Tiempo y descansos",
-          "target": "Calentamiento: 8 min; Empuje rápido: 4 min; Fuerza, rueda y aproximaciones: 24 min; Movilidad: 8 min; Transiciones: 3 min. Descansos de la ficha entre series; en unilateral después de ambos lados. Si falta tiempo, reducir el paseo/accesorio, sin recortar la recuperación de potencia ni añadir prisa. Se puede alternar dominada/remo con piernas dejando al menos 2 min entre series del mismo ejercicio; no es un circuito sin pausas."
+          "target": "Calentamiento: 8 min; Empuje rápido: 4 min; Fuerza, rueda y aproximaciones: 24 min; Movilidad: 8 min; Transiciones: 3 min. Los descansos se aplican entre series y después de ambos lados en los unilaterales. En movilidad usa los 15 s para cambiar de lado o posición entre ventanas. Si pasas de 50 min, registra qué alargó la sesión para ajustar el orden y los tiempos."
         },
         {
           "name": "Alternativa en casa",
@@ -452,14 +457,14 @@
       "schemaVersion": 1,
       "kind": "training-next-session",
       "status": "approved",
-      "prescriptionId": "calistenia-c-parque-boxeo-2026-11-02-v3",
-      "approvedAt": "2026-11-02T19:25:15.018454Z",
+      "prescriptionId": "calistenia-c-parque-boxeo-2026-11-09-v1",
+      "approvedAt": "2026-11-09T21:41:16.979004Z",
       "sessionType": "adapted",
-      "routineId": "sesion-calistenia-parque-c-2026-11-02-v3",
+      "routineId": "sesion-calistenia-parque-c-2026-11-09-v1",
       "routineName": "Calistenia C · cuerpo completo ligero y movilidad",
       "sourceProposal": {
-        "proposalId": "calistenia-c-parque-boxeo-2026-11-02-v3",
-        "createdAt": "2026-11-02T19:22:15.047963Z"
+        "proposalId": "calistenia-c-parque-boxeo-2026-11-09-v1",
+        "createdAt": "2026-11-09T21:25:03.531888Z"
       },
       "exercises": [
         {
@@ -476,7 +481,7 @@
         },
         {
           "name": "Empuje pike suave",
-          "target": "Sin chaleco y pies en el suelo. Manos aproximadamente al ancho de hombros, cadera alta formando una V invertida, rodillas algo flexionadas si hace falta. Flexionar codos llevando la cabeza hacia un punto ligeramente por delante de las manos, sin apoyarla; empujar para volver sin hundir cuello ni arquear la zona lumbar. Empezar con recorrido corto y controlado, dejando unas cuatro repeticiones posibles. Puede usarse un apoyo elevado firme para las manos si permite una variante más cómoda. No elevar pies ni practicar pino en esta primera exposición. Si no se encuentra una variante de cinco repeticiones cómodas, omitir la estación en el parque y registrar la dificultad; en casa puede sustituirse por press de mancuernas de pie 1×8–10 a RPE 6, carga ligera seleccionada en aproximaciones hasta 10 kg por mano, descanso 90 s. No sumar ambos.",
+          "target": "Sin chaleco y pies en el suelo. Manos aproximadamente al ancho de hombros, cadera alta formando una V invertida, rodillas algo flexionadas si hace falta. Flexionar codos llevando la cabeza hacia un punto ligeramente por delante de las manos, sin apoyarla; empujar para volver sin hundir cuello ni arquear la zona lumbar. Empezar con recorrido corto y controlado, dejando unas cuatro repeticiones posibles. Puede usarse un apoyo elevado firme para las manos si permite una variante más cómoda. No elevar pies ni practicar pino en este ciclo. Si no se encuentra una variante de cinco repeticiones cómodas, omitir la estación en el parque y registrar la dificultad; en casa puede sustituirse por press de mancuernas de pie 1×8–10 a RPE 6, carga ligera seleccionada en aproximaciones hasta 10 kg por mano, descanso 90 s. No sumar ambos.",
           "restSeconds": 90,
           "sets": [
             {
@@ -657,11 +662,11 @@
         },
         {
           "name": "Esfuerzo y ajuste al boxeo",
-          "target": "A/B fuerza RPE 6–7; C aproximadamente 6 con menos series. Dejar unas 3–4 repeticiones posibles, sin fallo. En saltos/empuje rápido manda la calidad. Antes de sparring especialmente duro, o con fatiga clara ya en el calentamiento, hacer una serie por ejercicio de fuerza, omitir potencia/rueda y conservar solo movilidad cómoda; puede durar menos de 45 min. Si persiste la fatiga o cae claramente el rendimiento en boxeo en dos exposiciones, intercalar descanso completo y revisar dosis. Dolor, hormigueo o pérdida de control: parar el ejercicio, no progresar. A y C incorporan un empuje nuevo: si la técnica, el apoyo o el rango no se controlan, no forzar el mínimo de repeticiones; aplicar la alternativa de esa estación."
+          "target": "Fuerza A y B a RPE 6–7. C mantiene una serie por ejercicio de fuerza y RPE alrededor de 6. En los saltos y flexiones rápidas, corta la serie si cae claramente la velocidad o el control. Si el boxeo pierde frescura al probar la subida, vuelve a la dosis previa de zancada y bisagra. Ante sparring especialmente duro, usa el extremo bajo del rango."
         },
         {
           "name": "Carga y progresión",
-          "target": "Primera exposición: dominadas, remos, empujes y saltos sin lastre. Split squat y bisagra permiten seleccionar 0–6 kg de chaleco en aproximaciones; registrar carga exacta. No confundir seleccionar una carga inicial con una progresión acreditada. Después, mismo montaje y recorrido; aumentar primero repeticiones. Tras dos exposiciones comparables al techo y dentro de RPE, proponer +1 kg en un movimiento o una pequeña modificación de palanca, no ambas cosas. C mantiene menos volumen y RPE ≤7; saltos sin chaleco. No añadir ejercicios domésticos al final por disponer de material."
+          "target": "Repite el apoyo y recorrido de cada patrón y registra los kg añadidos. En A, split squat con 10 kg de chaleco. En B, zancada sin lastre y bisagra con ensayo de 7 kg, regresando a 6 kg si supera RPE 7. Aumentar una sola variable por ejercicio y usar el menor salto del chaleco."
         },
         {
           "name": "Calentamiento general · 8 min",
@@ -673,7 +678,7 @@
         },
         {
           "name": "Tiempo y descansos",
-          "target": "Calentamiento: 8 min; Cinco prácticas y aproximaciones: 12 min; Coordinación y recuperaciones: 6 min; Movilidad: 10 min; Paseo: 7 min; Transiciones: 2 min. Descansos de la ficha entre series; en unilateral después de ambos lados. Si falta tiempo, reducir el paseo/accesorio, sin recortar la recuperación de potencia ni añadir prisa. Se puede alternar dominada/remo con piernas dejando al menos 2 min entre series del mismo ejercicio; no es un circuito sin pausas."
+          "target": "Calentamiento: 8 min; Cinco prácticas y aproximaciones: 12 min; Coordinación y recuperaciones: 6 min; Movilidad: 10 min; Paseo: 7 min; Transiciones: 2 min. Los descansos se aplican entre series y después de ambos lados en los unilaterales. En movilidad usa los 15 s para cambiar de lado o posición entre ventanas. Si pasas de 50 min, registra qué alargó la sesión para ajustar el orden y los tiempos."
         },
         {
           "name": "Alternativa en casa",
